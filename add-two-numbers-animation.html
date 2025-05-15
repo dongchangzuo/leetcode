@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Add Two Numbers Animation</title>
     <style>
@@ -15,7 +16,7 @@
             line-height: 1.6;
             color: #e1e1e1;
             background-color: #1a1a1a;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
             background-size: 20px 20px;
@@ -24,58 +25,57 @@
         /* Layout */
         .main-container {
             display: grid;
-            grid-template-columns: 350px 1fr 350px;
+            grid-template-columns: 350px 1fr 400px;
             min-height: 100vh;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1800px;
-            margin: 0 auto;
+            gap: 15px;
+            padding: 15px;
+            width: 100%;
+            margin: 0;
         }
 
         /* Problem Panel */
         .problem-panel {
             background: #2d2d2d;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            height: calc(100vh - 40px);
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            height: calc(100vh - 30px);
             position: sticky;
-            top: 20px;
+            top: 15px;
             overflow-y: auto;
             border: 1px solid #3d3d3d;
         }
 
         .problem-panel h2 {
             color: #61dafb;
-            font-size: 24px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #3d3d3d;
-            font-family: 'Fira Code', monospace;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #3d3d3d;
         }
 
         .problem-section {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .problem-section h3 {
             color: #61dafb;
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
 
         .problem-section p {
             color: #e1e1e1;
-            margin-bottom: 12px;
-            font-size: 15px;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .example-box {
             background: #363636;
-            border-left: 4px solid #61dafb;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
+            border-left: 3px solid #61dafb;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 0 4px 4px 0;
         }
 
         .example-box h4 {
@@ -97,32 +97,34 @@
             border: 1px solid #3d3d3d;
         }
 
-        /* Animation Area */
+        /* Animation Container */
         .animation-container {
             background: #2d2d2d;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             border: 1px solid #3d3d3d;
+            height: calc(100vh - 30px);
+            overflow-y: auto;
         }
 
         .controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
+            gap: 10px;
+            padding: 10px;
             background: #363636;
-            border-radius: 8px;
+            border-radius: 4px;
             border: 1px solid #3d3d3d;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 15px;
+            padding: 8px 15px;
+            font-size: 14px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -187,18 +189,18 @@
         .linked-list-container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
-            padding: 30px;
+            gap: 20px;
+            padding: 15px;
             background: #363636;
-            border-radius: 8px;
+            border-radius: 4px;
             border: 1px solid #3d3d3d;
         }
 
         .input-lists {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin-bottom: 20px;
+            gap: 30px;
+            margin-bottom: 15px;
             position: relative;
             align-items: flex-start;
         }
@@ -206,7 +208,7 @@
         .list-row {
             display: flex;
             align-items: flex-start;
-            gap: 20px;
+            gap: 10px;
         }
 
         .list-label {
@@ -217,22 +219,23 @@
             padding-top: 20px;
         }
 
-        #list1Container, #list2Container {
+        #list1Container,
+        #list2Container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .node {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: #2d2d2d;
             border: 2px solid #61dafb;
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 600;
             color: #e1e1e1;
             position: relative;
@@ -253,7 +256,7 @@
         }
 
         .arrow {
-            width: 40px;
+            width: 30px;
             height: 2px;
             background: #61dafb;
             position: relative;
@@ -295,13 +298,11 @@
         /* Status Display */
         .status-display {
             text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            color: #e1e1e1;
-            padding: 15px;
+            font-size: 14px;
+            padding: 10px;
             background: #363636;
-            border-radius: 8px;
-            margin: 10px 0;
+            border-radius: 4px;
+            margin: 5px 0;
             border: 1px solid #3d3d3d;
             font-family: 'Fira Code', monospace;
         }
@@ -309,38 +310,34 @@
         /* Description Panel */
         .description-container {
             background: #2d2d2d;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            height: calc(100vh - 40px);
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            height: calc(100vh - 30px);
             position: sticky;
-            top: 20px;
+            top: 15px;
             overflow-y: auto;
             border: 1px solid #3d3d3d;
         }
 
         .description-container h3 {
             color: #61dafb;
-            font-size: 20px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #3d3d3d;
-            text-align: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #3d3d3d;
         }
 
         .description-container p {
-            margin: 12px 0;
-            color: #e1e1e1;
-            font-size: 15px;
-            padding-left: 20px;
-            position: relative;
+            margin: 8px 0;
+            font-size: 14px;
+            padding-left: 15px;
         }
 
         .description-container p.sub-step {
-            padding-left: 40px;
-            margin: 8px 0;
-            font-size: 14px;
-            color: #a1a1a1;
+            padding-left: 30px;
+            margin: 6px 0;
+            font-size: 13px;
         }
 
         .description-container p.sub-step:before {
@@ -363,7 +360,7 @@
             width: 800px;
             height: 100vh;
             background: #1e1e1e;
-            box-shadow: -4px 0 6px rgba(0, 0, 0, 0.2);
+            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
             transform: translateX(100%);
             transition: transform 0.3s ease;
             z-index: 1000;
@@ -378,11 +375,10 @@
 
         .code-tabs {
             display: flex;
-            gap: 10px;
-            padding: 20px;
+            gap: 8px;
+            padding: 15px;
             border-bottom: 1px solid #3d3d3d;
             background: #252526;
-            flex-shrink: 0;
         }
 
         .code-tab {
@@ -403,18 +399,9 @@
         }
 
         .code-content {
-            padding: 30px;
-            font-family: 'Fira Code', monospace;
-            font-size: 16px;
-            line-height: 1.8;
-            flex: 1;
-            display: none;
-            overflow-y: auto;
-            overflow-x: hidden;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background: #1e1e1e;
-            color: #e1e1e1;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .code-content.active {
@@ -437,14 +424,37 @@
             margin-right: 800px;
         }
 
-        .code-line .keyword { color: #569cd6; }
-        .code-line .type { color: #4ec9b0; }
-        .code-line .string { color: #ce9178; }
-        .code-line .comment { color: #6a9955; }
-        .code-line .method { color: #dcdcaa; }
-        .code-line .number { color: #b5cea8; }
-        .code-line .operator { color: #d4d4d4; }
-        .code-line .variable { color: #9cdcfe; }
+        .code-line .keyword {
+            color: #569cd6;
+        }
+
+        .code-line .type {
+            color: #4ec9b0;
+        }
+
+        .code-line .string {
+            color: #ce9178;
+        }
+
+        .code-line .comment {
+            color: #6a9955;
+        }
+
+        .code-line .method {
+            color: #dcdcaa;
+        }
+
+        .code-line .number {
+            color: #b5cea8;
+        }
+
+        .code-line .operator {
+            color: #d4d4d4;
+        }
+
+        .code-line .variable {
+            color: #9cdcfe;
+        }
 
         /* Toggle Code Button */
         .toggle-code-btn {
@@ -470,18 +480,33 @@
         }
 
         /* Responsive Design */
+        @media screen and (max-width: 1400px) {
+            .main-container {
+                grid-template-columns: 300px 1fr 350px;
+                gap: 12px;
+                padding: 12px;
+            }
+        }
+
         @media screen and (max-width: 1200px) {
             .main-container {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 20px;
+                padding: 15px;
             }
 
             .problem-panel,
             .description-container {
                 position: relative;
                 height: auto;
+                min-height: 300px;
                 width: 100%;
                 top: 0;
+            }
+
+            .animation-container {
+                height: auto;
+                min-height: 500px;
             }
 
             .code-panel {
@@ -500,18 +525,60 @@
                 top: auto;
             }
         }
+
+        @media screen and (max-width: 768px) {
+            .main-container {
+                padding: 10px;
+                gap: 15px;
+            }
+
+            .problem-panel,
+            .description-container,
+            .animation-container {
+                padding: 15px;
+            }
+
+            .controls {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .input-lists {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .list-row {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .node {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .arrow {
+                width: 25px;
+            }
+        }
     </style>
 </head>
+
 <body>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <div class="main-container">
         <!-- Problem Panel -->
         <div class="problem-panel">
             <h2>Add Two Numbers</h2>
-            
+
             <div class="problem-section">
                 <h3>Problem Description</h3>
-                <p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
+                <p>You are given two non-empty linked lists representing two non-negative integers. The digits are
+                    stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and
+                    return the sum as a linked list.</p>
                 <p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
             </div>
 
@@ -561,7 +628,7 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             </div>
 
             <div class="status-display" id="statusDisplay"></div>
-            
+
             <div class="linked-list-container">
                 <div class="input-lists">
                     <div class="list-row">
@@ -584,13 +651,15 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
         <!-- Description Panel -->
         <div class="description-container" id="descriptionContainer">
             <h3>Algorithm Steps</h3>
-            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+            <div
+                style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
                 <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Initialization</p>
                 <p class="sub-step">• Create a dummy head node for the result list</p>
                 <p class="sub-step">• Set initial carry to 0</p>
             </div>
 
-            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+            <div
+                style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
                 <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Main Loop</p>
                 <p class="sub-step">• Continue while either list has nodes or carry exists</p>
                 <p class="sub-step">• For each position:</p>
@@ -610,34 +679,60 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
 
     <!-- Code Panel -->
     <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
-    
+
     <div class="code-panel" id="codePanel">
         <div class="code-tabs">
             <button class="code-tab active" onclick="switchTab('java')">Java</button>
             <button class="code-tab" onclick="switchTab('python')">Python</button>
         </div>
-        
+
         <div id="javaCode" class="code-content active">
             <div class="code-block">
-                <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
-                <div class="code-line">    <span class="keyword">public</span> <span class="type">ListNode</span> <span class="method">addTwoNumbers</span>(<span class="type">ListNode</span> <span class="variable">l1</span>, <span class="type">ListNode</span> <span class="variable">l2</span>) {</div>
-                <div class="code-line">        <span class="type">ListNode</span> <span class="variable">dummyHead</span> = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="number">0</span>);</div>
-                <div class="code-line">        <span class="type">ListNode</span> <span class="variable">current</span> = <span class="variable">dummyHead</span>;</div>
-                <div class="code-line">        <span class="type">int</span> <span class="variable">carry</span> = <span class="number">0</span>;</div>
+                <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span
+                        class="variable">Solution</span> {</div>
+                <div class="code-line"> <span class="keyword">public</span> <span class="type">ListNode</span> <span
+                        class="method">addTwoNumbers</span>(<span class="type">ListNode</span> <span
+                        class="variable">l1</span>, <span class="type">ListNode</span> <span class="variable">l2</span>)
+                    {</div>
+                <div class="code-line"> <span class="type">ListNode</span> <span class="variable">dummyHead</span> =
+                    <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="number">0</span>);
+                </div>
+                <div class="code-line"> <span class="type">ListNode</span> <span class="variable">current</span> = <span
+                        class="variable">dummyHead</span>;</div>
+                <div class="code-line"> <span class="type">int</span> <span class="variable">carry</span> = <span
+                        class="number">0</span>;</div>
                 <div class="code-line"></div>
-                <div class="code-line">        <span class="keyword">while</span> (<span class="variable">l1</span> != <span class="keyword">null</span> || <span class="variable">l2</span> != <span class="keyword">null</span> || <span class="variable">carry</span> != <span class="number">0</span>) {</div>
-                <div class="code-line">            <span class="type">int</span> <span class="variable">x</span> = (<span class="variable">l1</span> != <span class="keyword">null</span>) ? <span class="variable">l1</span>.val : <span class="number">0</span>;</div>
-                <div class="code-line">            <span class="type">int</span> <span class="variable">y</span> = (<span class="variable">l2</span> != <span class="keyword">null</span>) ? <span class="variable">l2</span>.val : <span class="number">0</span>;</div>
-                <div class="code-line">            <span class="type">int</span> <span class="variable">sum</span> = <span class="variable">carry</span> + <span class="variable">x</span> + <span class="variable">y</span>;</div>
-                <div class="code-line">            <span class="variable">carry</span> = <span class="variable">sum</span> / <span class="number">10</span>;</div>
-                <div class="code-line">            <span class="variable">current</span>.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="variable">sum</span> % <span class="number">10</span>);</div>
-                <div class="code-line">            <span class="variable">current</span> = <span class="variable">current</span>.next;</div>
-                <div class="code-line">            <span class="keyword">if</span> (<span class="variable">l1</span> != <span class="keyword">null</span>) <span class="variable">l1</span> = <span class="variable">l1</span>.next;</div>
-                <div class="code-line">            <span class="keyword">if</span> (<span class="variable">l2</span> != <span class="keyword">null</span>) <span class="variable">l2</span> = <span class="variable">l2</span>.next;</div>
-                <div class="code-line">        }</div>
+                <div class="code-line"> <span class="keyword">while</span> (<span class="variable">l1</span> != <span
+                        class="keyword">null</span> || <span class="variable">l2</span> != <span
+                        class="keyword">null</span> || <span class="variable">carry</span> != <span
+                        class="number">0</span>) {</div>
+                <div class="code-line"> <span class="type">int</span> <span class="variable">x</span> = (<span
+                        class="variable">l1</span> != <span class="keyword">null</span>) ? <span
+                        class="variable">l1</span>.val : <span class="number">0</span>;</div>
+                <div class="code-line"> <span class="type">int</span> <span class="variable">y</span> = (<span
+                        class="variable">l2</span> != <span class="keyword">null</span>) ? <span
+                        class="variable">l2</span>.val : <span class="number">0</span>;</div>
+                <div class="code-line"> <span class="type">int</span> <span class="variable">sum</span> = <span
+                        class="variable">carry</span> + <span class="variable">x</span> + <span
+                        class="variable">y</span>;</div>
+                <div class="code-line"> <span class="variable">carry</span> = <span class="variable">sum</span> / <span
+                        class="number">10</span>;</div>
+                <div class="code-line"> <span class="variable">current</span>.next = <span class="keyword">new</span>
+                    <span class="type">ListNode</span>(<span class="variable">sum</span> % <span
+                        class="number">10</span>);</div>
+                <div class="code-line"> <span class="variable">current</span> = <span
+                        class="variable">current</span>.next;</div>
+                <div class="code-line"> <span class="keyword">if</span> (<span class="variable">l1</span> != <span
+                        class="keyword">null</span>) <span class="variable">l1</span> = <span
+                        class="variable">l1</span>.next;</div>
+                <div class="code-line"> <span class="keyword">if</span> (<span class="variable">l2</span> != <span
+                        class="keyword">null</span>) <span class="variable">l2</span> = <span
+                        class="variable">l2</span>.next;</div>
+                <div class="code-line"> }</div>
                 <div class="code-line"></div>
-                <div class="code-line">        <span class="keyword">return</span> <span class="variable">dummyHead</span>.next;</div>
-                <div class="code-line">    }</div>
+                <div class="code-line"> <span class="keyword">return</span> <span
+                        class="variable">dummyHead</span>.next;</div>
+                <div class="code-line"> }</div>
                 <div class="code-line">}</div>
             </div>
         </div>
@@ -645,22 +740,43 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
         <div id="pythonCode" class="code-content">
             <div class="code-block">
                 <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
-                <div class="code-line">    <span class="keyword">def</span> <span class="method">addTwoNumbers</span>(<span class="variable">self</span>, <span class="variable">l1</span>: <span class="type">ListNode</span>, <span class="variable">l2</span>: <span class="type">ListNode</span>) -> <span class="type">ListNode</span>:</div>
-                <div class="code-line">        <span class="variable">dummyHead</span> = <span class="type">ListNode</span>(<span class="number">0</span>)</div>
-                <div class="code-line">        <span class="variable">current</span> = <span class="variable">dummyHead</span></div>
-                <div class="code-line">        <span class="variable">carry</span> = <span class="number">0</span></div>
+                <div class="code-line"> <span class="keyword">def</span> <span class="method">addTwoNumbers</span>(<span
+                        class="variable">self</span>, <span class="variable">l1</span>: <span
+                        class="type">ListNode</span>, <span class="variable">l2</span>: <span
+                        class="type">ListNode</span>) -> <span class="type">ListNode</span>:</div>
+                <div class="code-line"> <span class="variable">dummyHead</span> = <span
+                        class="type">ListNode</span>(<span class="number">0</span>)</div>
+                <div class="code-line"> <span class="variable">current</span> = <span class="variable">dummyHead</span>
+                </div>
+                <div class="code-line"> <span class="variable">carry</span> = <span class="number">0</span></div>
                 <div class="code-line"></div>
-                <div class="code-line">        <span class="keyword">while</span> <span class="variable">l1</span> <span class="keyword">or</span> <span class="variable">l2</span> <span class="keyword">or</span> <span class="variable">carry</span>:</div>
-                <div class="code-line">            <span class="variable">x</span> = <span class="variable">l1</span>.val <span class="keyword">if</span> <span class="variable">l1</span> <span class="keyword">else</span> <span class="number">0</span></div>
-                <div class="code-line">            <span class="variable">y</span> = <span class="variable">l2</span>.val <span class="keyword">if</span> <span class="variable">l2</span> <span class="keyword">else</span> <span class="number">0</span></div>
-                <div class="code-line">            <span class="variable">sum</span> = <span class="variable">carry</span> + <span class="variable">x</span> + <span class="variable">y</span></div>
-                <div class="code-line">            <span class="variable">carry</span> = <span class="variable">sum</span> // <span class="number">10</span></div>
-                <div class="code-line">            <span class="variable">current</span>.next = <span class="type">ListNode</span>(<span class="variable">sum</span> % <span class="number">10</span>)</div>
-                <div class="code-line">            <span class="variable">current</span> = <span class="variable">current</span>.next</div>
-                <div class="code-line">            <span class="variable">l1</span> = <span class="variable">l1</span>.next <span class="keyword">if</span> <span class="variable">l1</span> <span class="keyword">else</span> <span class="keyword">None</span></div>
-                <div class="code-line">            <span class="variable">l2</span> = <span class="variable">l2</span>.next <span class="keyword">if</span> <span class="variable">l2</span> <span class="keyword">else</span> <span class="keyword">None</span></div>
+                <div class="code-line"> <span class="keyword">while</span> <span class="variable">l1</span> <span
+                        class="keyword">or</span> <span class="variable">l2</span> <span class="keyword">or</span> <span
+                        class="variable">carry</span>:</div>
+                <div class="code-line"> <span class="variable">x</span> = <span class="variable">l1</span>.val <span
+                        class="keyword">if</span> <span class="variable">l1</span> <span class="keyword">else</span>
+                    <span class="number">0</span></div>
+                <div class="code-line"> <span class="variable">y</span> = <span class="variable">l2</span>.val <span
+                        class="keyword">if</span> <span class="variable">l2</span> <span class="keyword">else</span>
+                    <span class="number">0</span></div>
+                <div class="code-line"> <span class="variable">sum</span> = <span class="variable">carry</span> + <span
+                        class="variable">x</span> + <span class="variable">y</span></div>
+                <div class="code-line"> <span class="variable">carry</span> = <span class="variable">sum</span> // <span
+                        class="number">10</span></div>
+                <div class="code-line"> <span class="variable">current</span>.next = <span
+                        class="type">ListNode</span>(<span class="variable">sum</span> % <span class="number">10</span>)
+                </div>
+                <div class="code-line"> <span class="variable">current</span> = <span
+                        class="variable">current</span>.next</div>
+                <div class="code-line"> <span class="variable">l1</span> = <span class="variable">l1</span>.next <span
+                        class="keyword">if</span> <span class="variable">l1</span> <span class="keyword">else</span>
+                    <span class="keyword">None</span></div>
+                <div class="code-line"> <span class="variable">l2</span> = <span class="variable">l2</span>.next <span
+                        class="keyword">if</span> <span class="variable">l2</span> <span class="keyword">else</span>
+                    <span class="keyword">None</span></div>
                 <div class="code-line"></div>
-                <div class="code-line">        <span class="keyword">return</span> <span class="variable">dummyHead</span>.next</div>
+                <div class="code-line"> <span class="keyword">return</span> <span class="variable">dummyHead</span>.next
+                </div>
             </div>
         </div>
     </div>
@@ -668,7 +784,7 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
     <script>
         // Sample input lists
         const list1 = [5, 4, 6];
-        const list2 = [5, 6, 4,9,9,9,9];
+        const list2 = [5, 6, 4, 9, 9, 9, 9];
         let currentIndex = 0;
         let animationInterval;
         let isPaused = false;
@@ -701,15 +817,15 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             const node = document.createElement('div');
             node.className = 'node';
             node.textContent = value;
-            
+
             container.appendChild(node);
-            
+
             if (container.children.length > 1) {
                 const arrow = document.createElement('div');
                 arrow.className = 'arrow';
                 container.insertBefore(arrow, node);
             }
-            
+
             return node;
         }
 
@@ -717,11 +833,11 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             const list1Container = document.getElementById('list1Container');
             const list2Container = document.getElementById('list2Container');
             const resultContainer = document.getElementById('resultContainer');
-            
+
             list1Container.innerHTML = '';
             list2Container.innerHTML = '';
             resultContainer.innerHTML = '';
-            
+
             list1.forEach(value => createListNode(value, list1Container));
             list2.forEach(value => createListNode(value, list2Container));
         }
@@ -740,11 +856,11 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             const list2Nodes = document.querySelectorAll('#list2Container .node');
             const resultNodes = document.querySelectorAll('#resultContainer .node');
             const carryBox = document.getElementById('carryBox');
-            
+
             // Remove current highlighting
             list1Nodes.forEach(node => node.classList.remove('current'));
             list2Nodes.forEach(node => node.classList.remove('current'));
-            
+
             // Highlight current nodes
             if (currentIndex < list1.length) {
                 list1Nodes[currentIndex].classList.add('current');
@@ -752,28 +868,28 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             if (currentIndex < list2.length) {
                 list2Nodes[currentIndex].classList.add('current');
             }
-            
+
             // Get values
             const val1 = currentIndex < list1.length ? list1[currentIndex] : 0;
             const val2 = currentIndex < list2.length ? list2[currentIndex] : 0;
-            
+
             // Calculate sum with carry
             const sum = val1 + val2 + carry;
             const digit = sum % 10;
             const newCarry = Math.floor(sum / 10);
-            
+
             // Create result node
             const resultNode = createListNode(digit, document.getElementById('resultContainer'));
             resultNode.classList.add('current');
-            
+
             // Update carry display and position
             carryBox.textContent = `Carry: ${carry}`;
             carryBox.classList.add('visible');
-            
+
             // Position carry box vertically
             const containerRect = document.querySelector('.input-lists').getBoundingClientRect();
             let targetNode;
-            
+
             if (currentIndex < list2.length) {
                 targetNode = list2Nodes[currentIndex];
             } else if (currentIndex < list1.length) {
@@ -785,12 +901,12 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
                     targetNode = lastNode;
                 }
             }
-            
+
             if (targetNode) {
                 const rect = targetNode.getBoundingClientRect();
-                carryBox.style.top = `${rect.top - containerRect.top + rect.height/2}px`;
+                carryBox.style.top = `${rect.top - containerRect.top + rect.height / 2}px`;
             }
-            
+
             // Update status with detailed carry explanation
             let statusText = `Step ${currentIndex + 1}:\n`;
             statusText += `1. Current carry: ${carry}\n`;
@@ -804,12 +920,12 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
                 statusText += `   - Result digit: ${sum}\n`;
                 statusText += `   - New carry: 0`;
             }
-            
+
             document.getElementById('statusDisplay').innerHTML = statusText.replace(/\n/g, '<br>');
-            
+
             // Update description with detailed carry explanation
             updateDescription(val1, val2, sum, digit, carry, newCarry);
-            
+
             // Update carry for next iteration
             carry = newCarry;
             currentIndex++;
@@ -817,7 +933,7 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
 
         function startAnimation() {
             if (animationInterval && !isPaused) return;
-            
+
             if (isPaused) {
                 isPaused = false;
                 animationInterval = setInterval(animationStep, animationSpeed);
@@ -827,13 +943,13 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
                 createLists();
                 animationInterval = setInterval(animationStep, animationSpeed);
             }
-            
+
             updateButtonStates();
         }
 
         function pauseAnimation() {
             if (!animationInterval) return;
-            
+
             clearInterval(animationInterval);
             isPaused = true;
             updateButtonStates();
@@ -881,7 +997,7 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
                     <p class="sub-step">• Return the result list (dummy head's next node)</p>
                 </div>
             `;
-            
+
             descriptionContainer.innerHTML = description;
         }
 
@@ -901,10 +1017,10 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             const codePanel = document.getElementById('codePanel');
             const animationContainer = document.getElementById('animationContainer');
             const toggleBtn = document.getElementById('toggleCodeBtn');
-            
+
             codePanel.classList.toggle('visible');
             animationContainer.classList.toggle('code-hidden');
-            
+
             if (codePanel.classList.contains('visible')) {
                 toggleBtn.textContent = 'Hide Code';
                 animationContainer.style.marginRight = '800px';
@@ -915,18 +1031,18 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
         }
 
         // Initialize the layout
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const animationContainer = document.getElementById('animationContainer');
             animationContainer.style.marginRight = '800px';
             createLists();
 
             // Add click event listener to the document
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 // Don't trigger if clicking on buttons or code panel
                 if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
                     return;
                 }
-                
+
                 if (animationInterval && !isPaused) {
                     pauseAnimation();
                 } else if (isPaused) {
@@ -938,4 +1054,5 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
         });
     </script>
 </body>
-</html> 
+
+</html>
