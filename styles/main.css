@@ -574,4 +574,27 @@ button:disabled {
 
 .status-display br {
     margin: 5px 0;
+}
+
+.status-display .step-number {
+    color: #61dafb;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.status-display .step-content {
+    color: #e1e1e1;
+    margin-left: 20px;
+}
+
+.status-display .highlight {
+    color: #ffd700;
+    font-weight: 500;
+}
+
+.status-display .result {
+    color: #e06c75;
+    font-weight: 500;
 } 
