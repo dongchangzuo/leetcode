@@ -48,16 +48,17 @@
                 <div class="speed-control">
                     <span>Speed:</span>
                     <input type="range" id="speedControl" min="1" max="10" value="5">
+                    <span id="speedDisplay">1.0s</span>
                 </div>
             </div>
 
             <div class="string-container">
+                <div class="status-display" id="statusDisplay"></div>
                 <div class="string-display" id="arrayDisplay"></div>
                 <div class="hash-map-display" id="hashMapDisplay">
                     <h4>Hash Map:</h4>
                     <div class="map-content"></div>
                 </div>
-                <div class="status-display" id="statusDisplay"></div>
                 <div class="result-display" id="resultDisplay"></div>
             </div>
         </div>
@@ -119,6 +120,7 @@
                 this.resetBtn.addEventListener('click', () => this.reset());
                 this.speedControl.addEventListener('input', (e) => {
                     this.speed = 1100 - (e.target.value * 100);
+                    document.getElementById('speedDisplay').textContent = `${(this.speed / 1000).toFixed(1)}s`;
                 });
             }
 
