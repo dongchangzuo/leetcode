@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Insert Position</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Search Insert Position</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given a sorted array of distinct integers and a target value, return the index if the target is found.</p>
+                <p>If not, return the index where it would be if it were inserted in order.</p>
+                <p>You must write an algorithm with O(log n) runtime complexity.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: nums = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29], target = 17
+Output: 8</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: nums = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29], target = 16
+Output: 8</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: nums = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29], target = 30
+Output: 15</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>1 ≤ nums.length ≤ 10^4</li>
+                    <li>-10^4 ≤ nums[i] ≤ 10^4</li>
+                    <li>nums contains distinct values sorted in ascending order</li>
+                    <li>-10^4 ≤ target ≤ 10^4</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="array-display">
+                <div class="array-container">
+                    <h4>Array</h4>
+                    <div class="array-box" id="arrayBox"></div>
+                </div>
+                <div class="target-display">
+                    <h4>Target</h4>
+                    <div class="target-box" id="targetBox"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Binary Search Approach</p>
+                <p class="sub-step">• Initialize left and right pointers</p>
+                <p class="sub-step">• While left ≤ right:</p>
+                <p class="sub-step" style="padding-left: 20px;">- Calculate middle index</p>
+                <p class="sub-step" style="padding-left: 20px;">- Compare middle element with target</p>
+                <p class="sub-step" style="padding-left: 20px;">- Adjust search range accordingly</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Insert Position</p>
+                <p class="sub-step">• If target is found, return its index</p>
+                <p class="sub-step">• If target is not found:</p>
+                <p class="sub-step" style="padding-left: 20px;">- Return left pointer position</p>
+                <p class="sub-step" style="padding-left: 20px;">- This is where target should be inserted</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(log n) - binary search</p>
+                <p class="sub-step">• Space Complexity: O(1) - constant extra space</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">int</span> <span class="method">searchInsert</span>(<span class="type">int</span>[] <span class="variable">nums</span>, <span class="type">int</span> <span class="variable">target</span>) {</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">left</span> = <span class="number">0</span>;</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">right</span> = <span class="variable">nums</span>.length - <span class="number">1</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> (<span class="variable">left</span> <= <span class="variable">right</span>) {</div>
+                    <div class="code-line">            <span class="type">int</span> <span class="variable">mid</span> = <span class="variable">left</span> + (<span class="variable">right</span> - <span class="variable">left</span>) / <span class="number">2</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">nums</span>[<span class="variable">mid</span>] == <span class="variable">target</span>) {</div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="variable">mid</span>;</div>
+                    <div class="code-line">            } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">nums</span>[<span class="variable">mid</span>] < <span class="variable">target</span>) {</div>
+                    <div class="code-line">                <span class="variable">left</span> = <span class="variable">mid</span> + <span class="number">1</span>;</div>
+                    <div class="code-line">            } <span class="keyword">else</span> {</div>
+                    <div class="code-line">                <span class="variable">right</span> = <span class="variable">mid</span> - <span class="number">1</span>;</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">left</span>;</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">searchInsert</span>(<span class="variable">self</span>, <span class="variable">nums</span>: <span class="type">List</span>[<span class="type">int</span>], <span class="variable">target</span>: <span class="type">int</span>) -> <span class="type">int</span>:</div>
+                    <div class="code-line">        <span class="variable">left</span>, <span class="variable">right</span> = <span class="number">0</span>, <span class="builtin">len</span>(<span class="variable">nums</span>) - <span class="number">1</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> <span class="variable">left</span> <= <span class="variable">right</span>:</div>
+                    <div class="code-line">            <span class="variable">mid</span> = <span class="variable">left</span> + (<span class="variable">right</span> - <span class="variable">left</span>) // <span class="number">2</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">nums</span>[<span class="variable">mid</span>] == <span class="variable">target</span>:</div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="variable">mid</span></div>
+                    <div class="code-line">            <span class="keyword">elif</span> <span class="variable">nums</span>[<span class="variable">mid</span>] < <span class="variable">target</span>:</div>
+                    <div class="code-line">                <span class="variable">left</span> = <span class="variable">mid</span> + <span class="number">1</span></div>
+                    <div class="code-line">            <span class="keyword">else</span>:</div>
+                    <div class="code-line">                <span class="variable">right</span> = <span class="variable">mid</span> - <span class="number">1</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">left</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .array-display {
+        background: #2d2d2d;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .array-container {
+        margin-bottom: 20px;
+    }
+
+    .array-container h4 {
+        color: #61dafb;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .array-box {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        min-height: 50px;
+        padding: 10px;
+        background: #363636;
+        border-radius: 4px;
+        position: relative;
+    }
+
+    .pointer {
+        position: absolute;
+        top: -25px;
+        font-size: 14px;
+        color: #e1e1e1;
+        font-weight: 600;
+        transform: translateX(-50%);
+        transition: all 0.3s ease;
+    }
+
+    .pointer::after {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 10px;
+        background: currentColor;
+    }
+
+    .pointer.left {
+        color: #4caf50;
+    }
+
+    .pointer.right {
+        color: #f44336;
+    }
+
+    .pointer.mid {
+        color: #ff9800;
+    }
+
+    .pointer.offset-up {
+        top: -40px;
+    }
+
+    .pointer.offset-down {
+        top: -10px;
+    }
+
+    .element {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #2d2d2d;
+        border: 2px solid #61dafb;
+        border-radius: 4px;
+        padding: 5px 10px;
+        color: #e1e1e1;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .element.discarded {
+        color: #666;
+        border-color: #666;
+        text-decoration: line-through;
+        opacity: 0.5;
+    }
+
+    .element.current {
+        background: #61dafb;
+        color: #1e1e1e;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(97, 218, 251, 0.3);
+    }
+
+    .element.left {
+        border-color: #4caf50;
+    }
+
+    .element.right {
+        border-color: #f44336;
+    }
+
+    .element.mid {
+        border-color: #ff9800;
+    }
+
+    .element.found {
+        background: #4caf50;
+        color: #1e1e1e;
+        border-color: #4caf50;
+    }
+
+    .element.insert {
+        background: #ff9800;
+        color: #1e1e1e;
+        border-color: #ff9800;
+    }
+
+    .element-index {
+        font-size: 12px;
+        color: #888;
+        margin-top: 2px;
+    }
+
+    .element.discarded .element-index {
+        color: #666;
+    }
+
+    .target-display {
+        margin-top: 20px;
+    }
+
+    .target-display h4 {
+        color: #61dafb;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .target-box {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 10px;
+        background: #363636;
+        border-radius: 4px;
+    }
+
+    .target-value {
+        display: flex;
+        align-items: center;
+        background: #2d2d2d;
+        border: 2px solid #ff9800;
+        border-radius: 4px;
+        padding: 5px 10px;
+        color: #e1e1e1;
+        font-weight: 600;
+    }
+    </style>
+
+    <script>
+        // Sample input
+        const nums = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29];
+        const target = 17;
+        let currentStep = 0;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let left = 0;
+        let right = nums.length - 1;
+        let mid = 0;
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentStep === 0;
+        }
+
+        function createArrayDisplay() {
+            const container = document.getElementById('arrayBox');
+            container.innerHTML = '';
+            
+            // Create pointer container
+            const pointerContainer = document.createElement('div');
+            pointerContainer.style.position = 'relative';
+            pointerContainer.style.height = '0';
+            container.appendChild(pointerContainer);
+            
+            nums.forEach((val, index) => {
+                const element = document.createElement('div');
+                element.className = 'element';
+                element.textContent = val;
+                element.dataset.index = index;
+                
+                const indexSpan = document.createElement('span');
+                indexSpan.className = 'element-index';
+                indexSpan.textContent = index;
+                element.appendChild(indexSpan);
+                
+                container.appendChild(element);
+            });
+
+            // Display target
+            const targetContainer = document.getElementById('targetBox');
+            targetContainer.innerHTML = '';
+            const targetElement = document.createElement('div');
+            targetElement.className = 'target-value';
+            targetElement.textContent = target;
+            targetContainer.appendChild(targetElement);
+        }
+
+        function updateArrayDisplay() {
+            // Remove previous highlighting
+            document.querySelectorAll('.element').forEach(element => {
+                element.classList.remove('current', 'left', 'right', 'mid', 'found', 'insert', 'discarded');
+            });
+            document.querySelectorAll('.pointer').forEach(pointer => pointer.remove());
+
+            const arrayBox = document.getElementById('arrayBox');
+            const elements = arrayBox.querySelectorAll('.element');
+
+            // Calculate positions for pointers
+            const leftPos = elements[left].offsetLeft + elements[left].offsetWidth / 2;
+            const rightPos = elements[right].offsetLeft + elements[right].offsetWidth / 2;
+            const midPos = elements[mid].offsetLeft + elements[mid].offsetWidth / 2;
+
+            // Add pointers with position adjustment
+            const leftPointer = document.createElement('div');
+            leftPointer.className = 'pointer left';
+            leftPointer.textContent = 'L';
+            leftPointer.style.left = leftPos + 'px';
+
+            const rightPointer = document.createElement('div');
+            rightPointer.className = 'pointer right';
+            rightPointer.textContent = 'R';
+            rightPointer.style.left = rightPos + 'px';
+
+            const midPointer = document.createElement('div');
+            midPointer.className = 'pointer mid';
+            midPointer.textContent = 'M';
+            midPointer.style.left = midPos + 'px';
+
+            // Handle overlapping pointers
+            if (left === mid) {
+                leftPointer.classList.add('offset-up');
+                midPointer.classList.add('offset-down');
+            } else if (right === mid) {
+                rightPointer.classList.add('offset-up');
+                midPointer.classList.add('offset-down');
+            } else if (left === right) {
+                leftPointer.classList.add('offset-up');
+                rightPointer.classList.add('offset-down');
+            }
+
+            arrayBox.appendChild(leftPointer);
+            arrayBox.appendChild(rightPointer);
+            arrayBox.appendChild(midPointer);
+
+            // Highlight current range and mark discarded elements
+            for (let i = 0; i < nums.length; i++) {
+                const element = document.querySelector(`.element[data-index="${i}"]`);
+                if (i < left || i > right) {
+                    element.classList.add('discarded');
+                } else if (i === mid) {
+                    element.classList.add('mid');
+                }
+            }
+        }
+
+        function animationStep() {
+            if (left > right) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').innerHTML = 
+                    `<span class="step-number">Final Result:</span>
+                    <div class="step-content">
+                        <div>Target ${target} should be inserted at index <span class="result">${left}</span></div>
+                    </div>`;
+                updateButtonStates();
+                return;
+            }
+
+            mid = Math.floor(left + (right - left) / 2);
+            updateArrayDisplay();
+
+            let statusText = `<span class="step-number">Step ${currentStep + 1}:</span>`;
+            statusText += `<div class="step-content">`;
+            statusText += `<div>1. Current range: [${left}, ${right}]</div>`;
+            statusText += `<div>2. Middle index: <span class="highlight">${mid}</span> (value: ${nums[mid]})</div>`;
+
+            if (nums[mid] === target) {
+                const element = document.querySelector(`.element[data-index="${mid}"]`);
+                element.classList.add('found');
+                statusText += `<div>3. Found target at index <span class="result">${mid}</span></div>`;
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').innerHTML = statusText;
+                updateButtonStates();
+                return;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+                statusText += `<div>3. Target is greater, moving left pointer to <span class="result">${left}</span></div>`;
+            } else {
+                right = mid - 1;
+                statusText += `<div>3. Target is smaller, moving right pointer to <span class="result">${right}</span></div>`;
+            }
+
+            statusText += `</div>`;
+            document.getElementById('statusDisplay').innerHTML = statusText;
+            currentStep++;
+        }
+
+        function startAnimation() {
+            if (animationInterval && !isPaused) return;
+
+            if (isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+            } else {
+                currentStep = 0;
+                left = 0;
+                right = nums.length - 1;
+                createArrayDisplay();
+                document.getElementById('statusDisplay').textContent = '';
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+
+            updateButtonStates();
+        }
+
+        function pauseAnimation() {
+            if (!animationInterval) return;
+
+            clearInterval(animationInterval);
+            isPaused = true;
+            updateButtonStates();
+        }
+
+        function resetAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            isPaused = false;
+            currentStep = 0;
+            left = 0;
+            right = nums.length - 1;
+            createArrayDisplay();
+            document.getElementById('statusDisplay').textContent = '';
+            updateButtonStates();
+        }
+
+        function switchTab(language) {
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update example 1
+            const example1 = document.querySelector('.example-box:nth-child(1) pre code');
+            example1.textContent = `Input: nums = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29], target = 17
+Output: 8`;
+
+            // Update example 2
+            const example2 = document.querySelector('.example-box:nth-child(2) pre code');
+            example2.textContent = `Input: nums = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29], target = 16
+Output: 8`;
+
+            // Update example 3
+            const example3 = document.querySelector('.example-box:nth-child(3) pre code');
+            example3.textContent = `Input: nums = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29], target = 30
+Output: 15`;
+
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createArrayDisplay();
+
+            // Add click event listener to the document
+            document.addEventListener('click', function (e) {
+                // Don't trigger if clicking on buttons or code panel
+                if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
+                    return;
+                }
+
+                if (animationInterval && !isPaused) {
+                    pauseAnimation();
+                } else if (isPaused) {
+                    startAnimation();
+                } else if (!animationInterval) {
+                    startAnimation();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
