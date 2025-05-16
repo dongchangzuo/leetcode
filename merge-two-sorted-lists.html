@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merge Two Sorted Lists</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Merge Two Sorted Lists</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>You are given the heads of two sorted linked lists list1 and list2.</p>
+                <p>Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.</p>
+                <p>Return the head of the merged linked list.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: list1 = [1,2,4], list2 = [1,3,4]
+Output: [1,1,2,3,4,4]</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: list1 = [], list2 = []
+Output: []</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: list1 = [], list2 = [0]
+Output: [0]</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>The number of nodes in both lists is in the range [0, 50]</li>
+                    <li>-100 ≤ Node.val ≤ 100</li>
+                    <li>Both list1 and list2 are sorted in non-decreasing order</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="lists-display">
+                <div class="list-container">
+                    <h4>List 1</h4>
+                    <div class="list-box" id="list1Box"></div>
+                </div>
+                <div class="list-container">
+                    <h4>List 2</h4>
+                    <div class="list-box" id="list2Box"></div>
+                </div>
+                <div class="list-container">
+                    <h4>Result</h4>
+                    <div class="list-box" id="resultBox"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Initial Setup</p>
+                <p class="sub-step">• Create a dummy node as the head of the result list</p>
+                <p class="sub-step">• Create a current pointer to track the last node in result</p>
+                <p class="sub-step">• Initialize pointers for both input lists</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Main Process</p>
+                <p class="sub-step">• While both lists have nodes:</p>
+                <p class="sub-step" style="padding-left: 20px;">- Compare values of current nodes</p>
+                <p class="sub-step" style="padding-left: 20px;">- Add smaller node to result</p>
+                <p class="sub-step" style="padding-left: 20px;">- Move pointer in the list we took from</p>
+                <p class="sub-step">• Add remaining nodes from non-empty list</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(n + m) - where n and m are lengths of input lists</p>
+                <p class="sub-step">• Space Complexity: O(1) - only using pointers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">ListNode</span> <span class="method">mergeTwoLists</span>(<span class="type">ListNode</span> <span class="variable">list1</span>, <span class="type">ListNode</span> <span class="variable">list2</span>) {</div>
+                    <div class="code-line">        <span class="type">ListNode</span> <span class="variable">dummy</span> = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="number">0</span>);</div>
+                    <div class="code-line">        <span class="type">ListNode</span> <span class="variable">current</span> = <span class="variable">dummy</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> (<span class="variable">list1</span> != <span class="keyword">null</span> && <span class="variable">list2</span> != <span class="keyword">null</span>) {</div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">list1</span>.val <= <span class="variable">list2</span>.val) {</div>
+                    <div class="code-line">                <span class="variable">current</span>.next = <span class="variable">list1</span>;</div>
+                    <div class="code-line">                <span class="variable">list1</span> = <span class="variable">list1</span>.next;</div>
+                    <div class="code-line">            } <span class="keyword">else</span> {</div>
+                    <div class="code-line">                <span class="variable">current</span>.next = <span class="variable">list2</span>;</div>
+                    <div class="code-line">                <span class="variable">list2</span> = <span class="variable">list2</span>.next;</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">            <span class="variable">current</span> = <span class="variable">current</span>.next;</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="variable">current</span>.next = <span class="variable">list1</span> != <span class="keyword">null</span> ? <span class="variable">list1</span> : <span class="variable">list2</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">dummy</span>.next;</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">mergeTwoLists</span>(<span class="variable">self</span>, <span class="variable">list1</span>: <span class="type">Optional</span>[<span class="type">ListNode</span>], <span class="variable">list2</span>: <span class="type">Optional</span>[<span class="type">ListNode</span>]) -> <span class="type">Optional</span>[<span class="type">ListNode</span>]:</div>
+                    <div class="code-line">        <span class="variable">dummy</span> = <span class="type">ListNode</span>(<span class="number">0</span>)</div>
+                    <div class="code-line">        <span class="variable">current</span> = <span class="variable">dummy</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> <span class="variable">list1</span> <span class="keyword">and</span> <span class="variable">list2</span>:</div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">list1</span>.val <= <span class="variable">list2</span>.val:</div>
+                    <div class="code-line">                <span class="variable">current</span>.next = <span class="variable">list1</span></div>
+                    <div class="code-line">                <span class="variable">list1</span> = <span class="variable">list1</span>.next</div>
+                    <div class="code-line">            <span class="keyword">else</span>:</div>
+                    <div class="code-line">                <span class="variable">current</span>.next = <span class="variable">list2</span></div>
+                    <div class="code-line">                <span class="variable">list2</span> = <span class="variable">list2</span>.next</div>
+                    <div class="code-line">            <span class="variable">current</span> = <span class="variable">current</span>.next</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="variable">current</span>.next = <span class="variable">list1</span> <span class="keyword">if</span> <span class="variable">list1</span> <span class="keyword">else</span> <span class="variable">list2</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">dummy</span>.next</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .lists-display {
+        background: #2d2d2d;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .list-container {
+        margin-bottom: 20px;
+    }
+
+    .list-container h4 {
+        color: #61dafb;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .list-box {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        min-height: 50px;
+        padding: 10px;
+        background: #363636;
+        border-radius: 4px;
+    }
+
+    .node {
+        display: flex;
+        align-items: center;
+        background: #2d2d2d;
+        border: 2px solid #61dafb;
+        border-radius: 4px;
+        padding: 5px 10px;
+        color: #e1e1e1;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .node.current {
+        background: #61dafb;
+        color: #1e1e1e;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(97, 218, 251, 0.3);
+    }
+
+    .node.selected {
+        background: #4caf50;
+        color: #1e1e1e;
+        border-color: #4caf50;
+    }
+
+    .arrow {
+        color: #61dafb;
+        font-size: 20px;
+        margin: 0 5px;
+    }
+
+    .dummy-node {
+        opacity: 0.5;
+    }
+    </style>
+
+    <script>
+        // Sample input lists
+        const list1 = [1, 2, 4];
+        const list2 = [1, 3, 4];
+        let currentStep = 0;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let result = [];
+        let i = 0, j = 0;
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentStep === 0;
+        }
+
+        function createListDisplay(list, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            list.forEach((val, index) => {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.textContent = val;
+                node.dataset.index = index;
+                container.appendChild(node);
+
+                if (index < list.length - 1) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'arrow';
+                    arrow.textContent = '→';
+                    container.appendChild(arrow);
+                }
+            });
+        }
+
+        function updateResultDisplay() {
+            const container = document.getElementById('resultBox');
+            container.innerHTML = '';
+            
+            // Add dummy node
+            const dummyNode = document.createElement('div');
+            dummyNode.className = 'node dummy-node';
+            dummyNode.textContent = 'dummy';
+            container.appendChild(dummyNode);
+
+            const arrow = document.createElement('span');
+            arrow.className = 'arrow';
+            arrow.textContent = '→';
+            container.appendChild(arrow);
+            
+            result.forEach((val, index) => {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.textContent = val;
+                container.appendChild(node);
+
+                if (index < result.length - 1) {
+                    const arrow = document.createElement('span');
+                    arrow.className = 'arrow';
+                    arrow.textContent = '→';
+                    container.appendChild(arrow);
+                }
+            });
+        }
+
+        function animationStep() {
+            if (i >= list1.length && j >= list2.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').textContent = 
+                    `Final Result: [${result.join(',')}]`;
+                updateButtonStates();
+                return;
+            }
+
+            // Remove previous highlighting
+            document.querySelectorAll('.node').forEach(node => {
+                node.classList.remove('current');
+                node.classList.remove('selected');
+            });
+
+            let statusText = `<span class="step-number">Step ${currentStep + 1}:</span>`;
+            statusText += `<div class="step-content">`;
+
+            if (i < list1.length && j < list2.length) {
+                // Compare nodes from both lists
+                const node1 = document.querySelector(`#list1Box .node[data-index="${i}"]`);
+                const node2 = document.querySelector(`#list2Box .node[data-index="${j}"]`);
+                node1.classList.add('current');
+                node2.classList.add('current');
+
+                statusText += `<div>1. Comparing nodes: <span class="highlight">${list1[i]}</span> and <span class="highlight">${list2[j]}</span></div>`;
+
+                if (list1[i] <= list2[j]) {
+                    result.push(list1[i]);
+                    node1.classList.add('selected');
+                    statusText += `<div>2. Selected smaller node: <span class="result">${list1[i]}</span></div>`;
+                    i++;
+                } else {
+                    result.push(list2[j]);
+                    node2.classList.add('selected');
+                    statusText += `<div>2. Selected smaller node: <span class="result">${list2[j]}</span></div>`;
+                    j++;
+                }
+            } else if (i < list1.length) {
+                // Add remaining nodes from list1
+                const node = document.querySelector(`#list1Box .node[data-index="${i}"]`);
+                node.classList.add('current');
+                node.classList.add('selected');
+                result.push(list1[i]);
+                statusText += `<div>1. Adding remaining node from List 1: <span class="result">${list1[i]}</span></div>`;
+                i++;
+            } else {
+                // Add remaining nodes from list2
+                const node = document.querySelector(`#list2Box .node[data-index="${j}"]`);
+                node.classList.add('current');
+                node.classList.add('selected');
+                result.push(list2[j]);
+                statusText += `<div>1. Adding remaining node from List 2: <span class="result">${list2[j]}</span></div>`;
+                j++;
+            }
+
+            statusText += `<div>3. Current result: <span class="result">[${result.join(',')}]</span></div>`;
+            statusText += `</div>`;
+            
+            document.getElementById('statusDisplay').innerHTML = statusText;
+            updateResultDisplay();
+            currentStep++;
+        }
+
+        function startAnimation() {
+            if (animationInterval && !isPaused) return;
+
+            if (isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+            } else {
+                currentStep = 0;
+                result = [];
+                i = 0;
+                j = 0;
+                createListDisplay(list1, 'list1Box');
+                createListDisplay(list2, 'list2Box');
+                updateResultDisplay();
+                document.getElementById('statusDisplay').textContent = '';
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+
+            updateButtonStates();
+        }
+
+        function pauseAnimation() {
+            if (!animationInterval) return;
+
+            clearInterval(animationInterval);
+            isPaused = true;
+            updateButtonStates();
+        }
+
+        function resetAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            isPaused = false;
+            currentStep = 0;
+            result = [];
+            i = 0;
+            j = 0;
+            createListDisplay(list1, 'list1Box');
+            createListDisplay(list2, 'list2Box');
+            updateResultDisplay();
+            document.getElementById('statusDisplay').textContent = '';
+            updateButtonStates();
+        }
+
+        function switchTab(language) {
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createListDisplay(list1, 'list1Box');
+            createListDisplay(list2, 'list2Box');
+            updateResultDisplay();
+
+            // Add click event listener to the document
+            document.addEventListener('click', function (e) {
+                // Don't trigger if clicking on buttons or code panel
+                if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
+                    return;
+                }
+
+                if (animationInterval && !isPaused) {
+                    pauseAnimation();
+                } else if (isPaused) {
+                    startAnimation();
+                } else if (!animationInterval) {
+                    startAnimation();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
