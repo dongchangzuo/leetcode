@@ -67,6 +67,11 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
 
             <div class="status-display" id="statusDisplay"></div>
 
+            <div class="carry-display">
+                <h4>Carry</h4>
+                <div class="carry-box" id="carryBox">0</div>
+            </div>
+
             <div class="linked-list-container">
                 <div class="list-display" id="list1Display">
                     <h4>List 1</h4>
@@ -176,6 +181,45 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
         </div>
     </div>
 
+    <style>
+    .carry-display {
+        background: #2d2d2d;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .carry-display h4 {
+        color: #61dafb;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .carry-box {
+        width: 60px;
+        height: 60px;
+        background: #363636;
+        border: 2px solid #61dafb;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: #e1e1e1;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+    }
+
+    .carry-box.active {
+        background: #61dafb;
+        color: #1e1e1e;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(97, 218, 251, 0.3);
+    }
+    </style>
+
     <script>
         // Sample input lists
         const list1 = [2, 4, 3];
@@ -244,6 +288,16 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             createListDisplay(resultList, 'resultDisplay');
         }
 
+        function updateCarryDisplay() {
+            const carryBox = document.getElementById('carryBox');
+            carryBox.textContent = carry;
+            if (carry > 0) {
+                carryBox.classList.add('active');
+            } else {
+                carryBox.classList.remove('active');
+            }
+        }
+
         function animationStep() {
             if (currentIndex >= Math.max(list1.length, list2.length) && carry === 0) {
                 clearInterval(animationInterval);
@@ -261,6 +315,7 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             carry = Math.floor(sum / 10);
 
             resultList.push(digit);
+            updateCarryDisplay();
 
             // Update status display
             let statusText = `<span class="step-number">Step ${currentIndex + 1}:</span>`;
@@ -313,6 +368,7 @@ Output: [8,9,9,9,0,0,0,1]</code></pre>
             carry = 0;
             resultList = [];
             updateListDisplay();
+            updateCarryDisplay();
             document.getElementById('statusDisplay').textContent = '';
             updateButtonStates();
         }
