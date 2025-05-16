@@ -1,0 +1,175 @@
+/* Code Panel Styles */
+.code-panel {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Code Tabs */
+.code-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3d3d3d;
+    padding-bottom: 10px;
+}
+
+.code-tab {
+    padding: 8px 16px;
+    background: #363636;
+    border: 1px solid #3d3d3d;
+    border-radius: 4px;
+    color: #e1e1e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.code-tab:hover {
+    background: #404040;
+}
+
+.code-tab.active {
+    background: #61dafb;
+    color: #1a1a1a;
+    border-color: #61dafb;
+}
+
+/* Code Content */
+.code-content {
+    display: none;
+    background: #1e1e1e;
+    border-radius: 6px;
+    border: 1px solid #3d3d3d;
+    overflow: hidden;
+}
+
+.code-content.active {
+    display: block;
+}
+
+.code-block {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+/* Code Line */
+.code-line {
+    padding: 2px 0;
+    position: relative;
+    counter-increment: line;
+}
+
+.code-line::before {
+    content: counter(line);
+    position: absolute;
+    left: -40px;
+    color: #666;
+    text-align: right;
+    width: 30px;
+    user-select: none;
+}
+
+/* Syntax Highlighting */
+.keyword {
+    color: #c678dd;
+    font-weight: 500;
+}
+
+.type {
+    color: #61dafb;
+}
+
+.variable {
+    color: #e06c75;
+}
+
+.method {
+    color: #98c379;
+}
+
+.number {
+    color: #d19a66;
+}
+
+.string {
+    color: #98c379;
+}
+
+.comment {
+    color: #5c6370;
+    font-style: italic;
+}
+
+.operator {
+    color: #56b6c2;
+}
+
+/* Code Block Header */
+.code-header {
+    background: #2d2d2d;
+    padding: 10px 20px;
+    border-bottom: 1px solid #3d3d3d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-header h3 {
+    color: #61dafb;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Copy Button */
+.copy-btn {
+    background: #363636;
+    color: #e1e1e1;
+    border: 1px solid #3d3d3d;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: #404040;
+}
+
+/* Scrollbar for Code */
+.code-block::-webkit-scrollbar {
+    height: 8px;
+}
+
+.code-block::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+    background: #3d3d3d;
+    border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+    background: #4d4d4d;
+}
+
+/* Code Block Container */
+.code-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Language Badge */
+.language-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #363636;
+    color: #61dafb;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+} 
