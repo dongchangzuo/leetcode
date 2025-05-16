@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valid Parentheses</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Valid Parentheses</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.</p>
+                <p>An input string is valid if:</p>
+                <ul>
+                    <li>Open brackets must be closed by the same type of brackets.</li>
+                    <li>Open brackets must be closed in the correct order.</li>
+                    <li>Every close bracket has a corresponding open bracket of the same type.</li>
+                </ul>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: s = "{[()]}"
+Output: true
+Explanation: All brackets are matched in the correct order.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: s = "{[()}}"
+Output: false
+Explanation: The last '}' has no matching opening bracket.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: s = "(]"
+Output: false
+Explanation: The closing bracket ']' doesn't match the opening bracket '('.</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>1 ≤ s.length ≤ 10^4</li>
+                    <li>s consists of parentheses only '()[]{}'</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="parentheses-display">
+                <div class="input-string" id="inputString"></div>
+                <div class="stack-display">
+                    <h4>Stack</h4>
+                    <div class="stack-box" id="stackBox"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Stack Approach</p>
+                <p class="sub-step">• Use a stack to keep track of opening brackets</p>
+                <p class="sub-step">• When we see an opening bracket, push it onto the stack</p>
+                <p class="sub-step">• When we see a closing bracket, check if it matches the top of the stack</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Main Process</p>
+                <p class="sub-step">• For each character in the string:</p>
+                <p class="sub-step" style="padding-left: 20px;">- If it's an opening bracket, push to stack</p>
+                <p class="sub-step" style="padding-left: 20px;">- If it's a closing bracket:</p>
+                <p class="sub-step" style="padding-left: 40px;">• Check if stack is empty (return false if it is)</p>
+                <p class="sub-step" style="padding-left: 40px;">• Check if top of stack matches (return false if it doesn't)</p>
+                <p class="sub-step" style="padding-left: 40px;">• Pop from stack if it matches</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(n) - single pass through string</p>
+                <p class="sub-step">• Space Complexity: O(n) - stack can grow up to n elements</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="method">isValid</span>(<span class="type">String</span> <span class="variable">s</span>) {</div>
+                    <div class="code-line">        <span class="type">Stack</span>&lt;<span class="type">Character</span>&gt; <span class="variable">stack</span> = <span class="keyword">new</span> <span class="type">Stack</span>&lt;&gt;();</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">for</span> (<span class="type">char</span> <span class="variable">c</span> : <span class="variable">s</span>.toCharArray()) {</div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">c</span> == <span class="string">'('</span> || <span class="variable">c</span> == <span class="string">'['</span> || <span class="variable">c</span> == <span class="string">'{'</span>) {</div>
+                    <div class="code-line">                <span class="variable">stack</span>.push(<span class="variable">c</span>);</div>
+                    <div class="code-line">            } <span class="keyword">else</span> {</div>
+                    <div class="code-line">                <span class="keyword">if</span> (<span class="variable">stack</span>.isEmpty()) {</div>
+                    <div class="code-line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div>
+                    <div class="code-line">                }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">                <span class="type">char</span> <span class="variable">top</span> = <span class="variable">stack</span>.pop();</div>
+                    <div class="code-line">                <span class="keyword">if</span> ((<span class="variable">c</span> == <span class="string">')'</span> && <span class="variable">top</span> != <span class="string">'('</span>) ||</div>
+                    <div class="code-line">                    (<span class="variable">c</span> == <span class="string">']'</span> && <span class="variable">top</span> != <span class="string">'['</span>) ||</div>
+                    <div class="code-line">                    (<span class="variable">c</span> == <span class="string">'}'</span> && <span class="variable">top</span> != <span class="string">'{'</span>)) {</div>
+                    <div class="code-line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div>
+                    <div class="code-line">                }</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">stack</span>.isEmpty();</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">isValid</span>(<span class="variable">self</span>, <span class="variable">s</span>: <span class="type">str</span>) -> <span class="type">bool</span>:</div>
+                    <div class="code-line">        <span class="variable">stack</span> = []</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">for</span> <span class="variable">c</span> <span class="keyword">in</span> <span class="variable">s</span>:</div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">c</span> <span class="keyword">in</span> <span class="string">'([{'</span>:</div>
+                    <div class="code-line">                <span class="variable">stack</span>.append(<span class="variable">c</span>)</div>
+                    <div class="code-line">            <span class="keyword">else</span>:</div>
+                    <div class="code-line">                <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">stack</span>:</div>
+                    <div class="code-line">                    <span class="keyword">return</span> <span class="keyword">False</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">                <span class="variable">top</span> = <span class="variable">stack</span>.pop()</div>
+                    <div class="code-line">                <span class="keyword">if</span> ((<span class="variable">c</span> == <span class="string">')'</span> <span class="keyword">and</span> <span class="variable">top</span> != <span class="string">'('</span>) <span class="keyword">or</span></div>
+                    <div class="code-line">                    (<span class="variable">c</span> == <span class="string">']'</span> <span class="keyword">and</span> <span class="variable">top</span> != <span class="string">'['</span>) <span class="keyword">or</span></div>
+                    <div class="code-line">                    (<span class="variable">c</span> == <span class="string">'}'</span> <span class="keyword">and</span> <span class="variable">top</span> != <span class="string">'{'</span>)):</div>
+                    <div class="code-line">                    <span class="keyword">return</span> <span class="keyword">False</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="keyword">not</span> <span class="variable">stack</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .parentheses-display {
+        background: #2d2d2d;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .input-string {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+
+    .char-box {
+        width: 35px;
+        height: 35px;
+        background: #363636;
+        border: 2px solid #61dafb;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #e1e1e1;
+        transition: all 0.3s ease;
+    }
+
+    .char-box.current {
+        background: #61dafb;
+        color: #1e1e1e;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(97, 218, 251, 0.3);
+    }
+
+    .char-box.matched {
+        background: #4caf50;
+        color: #1e1e1e;
+        border-color: #4caf50;
+    }
+
+    .char-box.mismatched {
+        background: #f44336;
+        color: #1e1e1e;
+        border-color: #f44336;
+    }
+
+    .stack-display {
+        background: #363636;
+        border-radius: 6px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .stack-display h4 {
+        color: #61dafb;
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+
+    .stack-box {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 5px;
+        min-height: 35px;
+        padding: 10px;
+        background: #2d2d2d;
+        border-radius: 4px;
+    }
+
+    .stack-item {
+        width: 35px;
+        height: 35px;
+        background: #61dafb;
+        border: 2px solid #61dafb;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e1e1e;
+        transition: all 0.3s ease;
+    }
+
+    .stack-item.matched {
+        background: #4caf50;
+        border-color: #4caf50;
+    }
+
+    .stack-item.mismatched {
+        background: #f44336;
+        border-color: #f44336;
+    }
+    </style>
+
+    <script>
+        // Sample input string
+        const inputString = "{[()}}";
+        let currentIndex = 0;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let stack = [];
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentIndex === 0;
+        }
+
+        function createInputDisplay() {
+            const container = document.getElementById('inputString');
+            container.innerHTML = '';
+            
+            inputString.split('').forEach((char, index) => {
+                const charBox = document.createElement('div');
+                charBox.className = 'char-box';
+                charBox.textContent = char;
+                charBox.dataset.index = index;
+                container.appendChild(charBox);
+            });
+        }
+
+        function updateStackDisplay() {
+            const stackBox = document.getElementById('stackBox');
+            stackBox.innerHTML = '';
+            
+            stack.forEach(char => {
+                const stackItem = document.createElement('div');
+                stackItem.className = 'stack-item';
+                stackItem.textContent = char;
+                stackBox.appendChild(stackItem);
+            });
+        }
+
+        function animationStep() {
+            if (currentIndex >= inputString.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').textContent = 
+                    `Final Result: ${stack.length === 0 ? 'Valid' : 'Invalid'}`;
+                updateButtonStates();
+                return;
+            }
+
+            // Remove previous highlighting
+            document.querySelectorAll('.char-box').forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('matched');
+                box.classList.remove('mismatched');
+            });
+
+            document.querySelectorAll('.stack-item').forEach(item => {
+                item.classList.remove('matched');
+                item.classList.remove('mismatched');
+            });
+
+            const currentChar = inputString[currentIndex];
+            const charBox = document.querySelector(`.char-box[data-index="${currentIndex}"]`);
+            charBox.classList.add('current');
+
+            let statusText = `<span class="step-number">Step ${currentIndex + 1}:</span>`;
+            statusText += `<div class="step-content">`;
+            statusText += `<div>1. Current character: <span class="highlight">"${currentChar}"</span></div>`;
+
+            if ('([{'.includes(currentChar)) {
+                // Opening bracket
+                stack.push(currentChar);
+                charBox.classList.add('matched');
+                statusText += `<div>2. Action: Push to stack</div>`;
+            } else {
+                // Closing bracket
+                if (stack.length === 0) {
+                    charBox.classList.add('mismatched');
+                    statusText += `<div>2. Error: Stack is empty</div>`;
+                    clearInterval(animationInterval);
+                    animationInterval = null;
+                    isPaused = false;
+                    document.getElementById('statusDisplay').innerHTML = statusText + 
+                        `<div>3. Result: <span class="result">Invalid</span></div></div>`;
+                    updateButtonStates();
+                    return;
+                }
+
+                const top = stack.pop();
+                const isValid = (currentChar === ')' && top === '(') ||
+                              (currentChar === ']' && top === '[') ||
+                              (currentChar === '}' && top === '{');
+
+                if (isValid) {
+                    charBox.classList.add('matched');
+                    statusText += `<div>2. Action: Match found, pop from stack</div>`;
+                } else {
+                    charBox.classList.add('mismatched');
+                    statusText += `<div>2. Error: Mismatched brackets</div>`;
+                    clearInterval(animationInterval);
+                    animationInterval = null;
+                    isPaused = false;
+                    document.getElementById('statusDisplay').innerHTML = statusText + 
+                        `<div>3. Result: <span class="result">Invalid</span></div></div>`;
+                    updateButtonStates();
+                    return;
+                }
+            }
+
+            statusText += `<div>3. Stack size: <span class="result">${stack.length}</span></div>`;
+            statusText += `</div>`;
+            
+            document.getElementById('statusDisplay').innerHTML = statusText;
+            updateStackDisplay();
+            currentIndex++;
+        }
+
+        function startAnimation() {
+            if (animationInterval && !isPaused) return;
+
+            if (isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+            } else {
+                currentIndex = 0;
+                stack = [];
+                createInputDisplay();
+                updateStackDisplay();
+                document.getElementById('statusDisplay').textContent = '';
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+
+            updateButtonStates();
+        }
+
+        function pauseAnimation() {
+            if (!animationInterval) return;
+
+            clearInterval(animationInterval);
+            isPaused = true;
+            updateButtonStates();
+        }
+
+        function resetAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            isPaused = false;
+            currentIndex = 0;
+            stack = [];
+            createInputDisplay();
+            updateStackDisplay();
+            document.getElementById('statusDisplay').textContent = '';
+            updateButtonStates();
+        }
+
+        function switchTab(language) {
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createInputDisplay();
+            updateStackDisplay();
+
+            // Add click event listener to the document
+            document.addEventListener('click', function (e) {
+                // Don't trigger if clicking on buttons or code panel
+                if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
+                    return;
+                }
+
+                if (animationInterval && !isPaused) {
+                    pauseAnimation();
+                } else if (isPaused) {
+                    startAnimation();
+                } else if (!animationInterval) {
+                    startAnimation();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
