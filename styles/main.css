@@ -338,6 +338,10 @@ button:disabled {
     line-height: 1.6;
 }
 
+.explanation-step ol {
+    margin-left: 20px;
+}
+
 /* Code Highlighting */
 .code-highlight {
     background: #1e1e1e;
