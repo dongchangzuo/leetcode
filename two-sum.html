@@ -52,6 +52,10 @@
 
             <div class="string-container">
                 <div class="string-display" id="arrayDisplay"></div>
+                <div class="hash-map-display" id="hashMapDisplay">
+                    <h4>Hash Map:</h4>
+                    <div class="map-content"></div>
+                </div>
                 <div class="status-display" id="statusDisplay"></div>
                 <div class="result-display" id="resultDisplay"></div>
             </div>
@@ -120,6 +124,7 @@
                 this.isRunning = true;
                 this.startBtn.disabled = true;
                 this.displayArray(this.nums);
+                this.displayHashMap(new Map());
                 
                 const map = new Map();
                 let result = null;
@@ -137,6 +142,7 @@
                     }
                     
                     map.set(this.nums[i], i);
+                    this.displayHashMap(map);
                     await this.delay();
                 }
 
@@ -182,8 +188,30 @@
                 this.currentStep++;
             }
 
+            displayHashMap(map) {
+                const mapContent = document.querySelector('.map-content');
+                mapContent.innerHTML = '';
+                
+                if (map.size === 0) {
+                    mapContent.innerHTML = '<div class="map-empty">Empty</div>';
+                    return;
+                }
+
+                for (const [key, value] of map.entries()) {
+                    const entry = document.createElement('div');
+                    entry.className = 'map-entry';
+                    entry.innerHTML = `
+                        <span class="map-key">${key}</span>
+                        <span class="map-arrow">→</span>
+                        <span class="map-value">${value}</span>
+                    `;
+                    mapContent.appendChild(entry);
+                }
+            }
+
             reset() {
                 this.arrayDisplay.innerHTML = '';
+                document.querySelector('.map-content').innerHTML = '<div class="map-empty">Empty</div>';
                 this.statusDisplay.innerHTML = '';
                 this.resultDisplay.textContent = '';
                 this.currentStep = 0;

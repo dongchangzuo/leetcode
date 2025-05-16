@@ -606,4 +606,57 @@ button:disabled {
     list-style-position: inside;
     padding-left: 0;
     margin-left: 0;
+}
+
+.hash-map-display {
+    background: #2d2d2d;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #3d3d3d;
+}
+
+.hash-map-display h4 {
+    color: #61dafb;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.map-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.map-entry {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: #363636;
+    border-radius: 4px;
+    border: 1px solid #3d3d3d;
+}
+
+.map-key {
+    color: #61dafb;
+    font-weight: 500;
+    min-width: 30px;
+    text-align: center;
+}
+
+.map-arrow {
+    color: #e1e1e1;
+}
+
+.map-value {
+    color: #ffd700;
+    font-weight: 500;
+}
+
+.map-empty {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
 } 
