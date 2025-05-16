@@ -597,4 +597,10 @@ button:disabled {
 .status-display .result {
     color: #e06c75;
     font-weight: 500;
+}
+
+.constraint-list {
+    list-style-position: inside;
+    padding-left: 0;
+    margin-left: 0;
 } 
