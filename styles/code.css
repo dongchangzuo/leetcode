@@ -51,12 +51,18 @@
 .code-block {
     padding: 20px;
     overflow-x: auto;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
 }
 
 /* Code Line */
 .code-line {
     padding: 2px 0;
     position: relative;
+    white-space: pre;
+    font-family: 'Fira Code', 'Consolas', monospace;
 }
 
 /* Syntax Highlighting */
