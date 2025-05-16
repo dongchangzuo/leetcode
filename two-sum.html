@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Two Sum</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Two Sum</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</p>
+                <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+                <p>You can return the answer in any order.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: nums = [3,2,4], target = 6
+Output: [1,2]</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: nums = [3,3], target = 6
+Output: [0,1]</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>2 ≤ nums.length ≤ 10^4</li>
+                    <li>-10^9 ≤ nums[i] ≤ 10^9</li>
+                    <li>-10^9 ≤ target ≤ 10^9</li>
+                    <li>Only one valid answer exists</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="array-container">
+                <div class="array-display" id="arrayDisplay"></div>
+                <div class="hash-map-display" id="hashMapDisplay"></div>
+                <div class="result-display" id="resultDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Hash Map Approach</p>
+                <p class="sub-step">• Use a hash map to store numbers and their indices</p>
+                <p class="sub-step">• For each number, check if its complement (target - number) exists in the map</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Main Loop</p>
+                <p class="sub-step">• For each number in the array:</p>
+                <p class="sub-step" style="padding-left: 60px;">- Calculate complement = target - current number</p>
+                <p class="sub-step" style="padding-left: 60px;">- If complement exists in hash map:</p>
+                <p class="sub-step" style="padding-left: 90px;">• Return [complement's index, current index]</p>
+                <p class="sub-step" style="padding-left: 60px;">- Add current number and its index to hash map</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(n) - single pass through array</p>
+                <p class="sub-step">• Space Complexity: O(n) - hash map storage</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">int</span>[] <span class="method">twoSum</span>(<span class="type">int</span>[] <span class="variable">nums</span>, <span class="type">int</span> <span class="variable">target</span>) {</div>
+                    <div class="code-line">        <span class="type">Map</span>&lt;<span class="type">Integer</span>, <span class="type">Integer</span>&gt; <span class="variable">map</span> = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> = <span class="number">0</span>; <span class="variable">i</span> &lt; <span class="variable">nums</span>.length; <span class="variable">i</span>++) {</div>
+                    <div class="code-line">            <span class="type">int</span> <span class="variable">complement</span> = <span class="variable">target</span> - <span class="variable">nums</span>[<span class="variable">i</span>];</div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">map</span>.containsKey(<span class="variable">complement</span>)) {</div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">int</span>[] { <span class="variable">map</span>.get(<span class="variable">complement</span>), <span class="variable">i</span> };</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">            <span class="variable">map</span>.put(<span class="variable">nums</span>[<span class="variable">i</span>], <span class="variable">i</span>);</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">int</span>[] {};</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">twoSum</span>(<span class="variable">self</span>, <span class="variable">nums</span>: <span class="type">List</span>[<span class="type">int</span>], <span class="variable">target</span>: <span class="type">int</span>) -> <span class="type">List</span>[<span class="type">int</span>]:</div>
+                    <div class="code-line">        <span class="variable">num_map</span> = {}</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">for</span> <span class="variable">i</span>, <span class="variable">num</span> <span class="keyword">in</span> <span class="method">enumerate</span>(<span class="variable">nums</span>):</div>
+                    <div class="code-line">            <span class="variable">complement</span> = <span class="variable">target</span> - <span class="variable">num</span></div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">complement</span> <span class="keyword">in</span> <span class="variable">num_map</span>:</div>
+                    <div class="code-line">                <span class="keyword">return</span> [<span class="variable">num_map</span>[<span class="variable">complement</span>], <span class="variable">i</span>]</div>
+                    <div class="code-line">            <span class="variable">num_map</span>[<span class="variable">num</span>] = <span class="variable">i</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> []</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample input array and target
+        const nums = [2, 7, 11, 15];
+        const target = 9;
+        let currentIndex = 0;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let numMap = new Map();
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentIndex === 0;
+        }
+
+        function createArrayDisplay() {
+            const arrayDisplay = document.getElementById('arrayDisplay');
+            arrayDisplay.innerHTML = '';
+            
+            // Add current pointer arrow
+            const currentArrow = document.createElement('div');
+            currentArrow.className = 'pointer-arrow current';
+            currentArrow.setAttribute('data-label', 'current');
+            arrayDisplay.appendChild(currentArrow);
+            
+            for (let i = 0; i < nums.length; i++) {
+                const numBox = document.createElement('div');
+                numBox.className = 'num-box';
+                numBox.textContent = nums[i];
+                numBox.dataset.index = i;
+                arrayDisplay.appendChild(numBox);
+            }
+        }
+
+        function updateHashMapDisplay() {
+            const hashMapDisplay = document.getElementById('hashMapDisplay');
+            hashMapDisplay.innerHTML = '<h4>Hash Map:</h4>';
+            
+            const mapContainer = document.createElement('div');
+            mapContainer.className = 'map-container';
+            
+            for (let [num, index] of numMap.entries()) {
+                const entry = document.createElement('div');
+                entry.className = 'map-entry';
+                entry.innerHTML = `<span class="key">${num}</span> → <span class="value">${index}</span>`;
+                mapContainer.appendChild(entry);
+            }
+            
+            hashMapDisplay.appendChild(mapContainer);
+        }
+
+        function updateArrayDisplay() {
+            const arrayDisplay = document.getElementById('arrayDisplay');
+            const numBoxes = arrayDisplay.querySelectorAll('.num-box');
+            
+            // Remove previous highlighting
+            numBoxes.forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('complement');
+                box.classList.remove('found');
+            });
+
+            // Update highlighting
+            if (currentIndex < numBoxes.length) {
+                numBoxes[currentIndex].classList.add('current');
+            }
+            
+            // Update arrow position
+            const currentArrow = arrayDisplay.querySelector('.pointer-arrow.current');
+            if (numBoxes[currentIndex]) {
+                const currentBox = numBoxes[currentIndex];
+                const currentRect = currentBox.getBoundingClientRect();
+                const containerRect = arrayDisplay.getBoundingClientRect();
+                currentArrow.style.left = (currentRect.left - containerRect.left + currentRect.width / 2) + 'px';
+            }
+        }
+
+        function animationStep() {
+            if (currentIndex >= nums.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').textContent = 'Animation Complete!';
+                updateButtonStates();
+                return;
+            }
+
+            const currentNum = nums[currentIndex];
+            const complement = target - currentNum;
+            const numBoxes = document.querySelectorAll('.num-box');
+            
+            // Update status display
+            let statusText = `<span class="step-number">Step ${currentIndex + 1}:</span>`;
+            statusText += `<div class="step-content">`;
+            statusText += `<div>1. Current number: <span class="highlight">${currentNum}</span></div>`;
+            statusText += `<div>2. Looking for complement: <span class="highlight">${complement}</span></div>`;
+
+            if (numMap.has(complement)) {
+                const complementIndex = numMap.get(complement);
+                numBoxes[complementIndex].classList.add('complement');
+                numBoxes[currentIndex].classList.add('found');
+                
+                statusText += `<div>3. Found complement at index <span class="highlight">${complementIndex}</span></div>`;
+                statusText += `<div>4. Solution found: [<span class="result">${complementIndex}</span>, <span class="result">${currentIndex}</span>]</span></div>`;
+                
+                document.getElementById('resultDisplay').textContent = `Solution: [${complementIndex}, ${currentIndex}]`;
+                
+                // End animation
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                updateButtonStates();
+            } else {
+                statusText += `<div>3. Complement not found in hash map</div>`;
+                statusText += `<div>4. Adding current number to hash map</div>`;
+                
+                numMap.set(currentNum, currentIndex);
+                updateHashMapDisplay();
+            }
+            
+            statusText += `</div>`;
+            document.getElementById('statusDisplay').innerHTML = statusText;
+
+            updateArrayDisplay();
+            currentIndex++;
+        }
+
+        function startAnimation() {
+            if (animationInterval && !isPaused) return;
+
+            if (isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+            } else {
+                currentIndex = 0;
+                numMap.clear();
+                createArrayDisplay();
+                updateHashMapDisplay();
+                updateArrayDisplay();
+                document.getElementById('statusDisplay').textContent = '';
+                document.getElementById('resultDisplay').textContent = '';
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+
+            updateButtonStates();
+        }
+
+        function pauseAnimation() {
+            if (!animationInterval) return;
+
+            clearInterval(animationInterval);
+            isPaused = true;
+            updateButtonStates();
+        }
+
+        function resetAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            isPaused = false;
+            currentIndex = 0;
+            numMap.clear();
+            createArrayDisplay();
+            updateHashMapDisplay();
+            updateArrayDisplay();
+            document.getElementById('statusDisplay').textContent = '';
+            document.getElementById('resultDisplay').textContent = '';
+            updateButtonStates();
+        }
+
+        function switchTab(language) {
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createArrayDisplay();
+            updateHashMapDisplay();
+
+            // Add click event listener to the document
+            document.addEventListener('click', function (e) {
+                // Don't trigger if clicking on buttons or code panel
+                if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
+                    return;
+                }
+
+                if (animationInterval && !isPaused) {
+                    pauseAnimation();
+                } else if (isPaused) {
+                    startAnimation();
+                } else if (!animationInterval) {
+                    startAnimation();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

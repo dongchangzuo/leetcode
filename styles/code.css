@@ -48,56 +48,130 @@
     display: block;
 }
 
+/* Code Block Styling */
+.code-container {
+    position: relative;
+    background: #1e1e1e;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.language-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #363636;
+    color: #61dafb;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 .code-block {
     padding: 20px;
     overflow-x: auto;
-    font-family: 'Fira Code', 'Consolas', monospace;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
-/* Code Line */
 .code-line {
-    padding: 2px 0;
-    position: relative;
     white-space: pre;
-    font-family: 'Fira Code', 'Consolas', monospace;
+    color: #e0e0e0;
 }
 
 /* Syntax Highlighting */
 .keyword {
-    color: #c678dd;
-    font-weight: 500;
+    color: #569cd6;
 }
 
 .type {
-    color: #61dafb;
+    color: #4ec9b0;
 }
 
 .variable {
-    color: #e06c75;
+    color: #9cdcfe;
 }
 
 .method {
-    color: #98c379;
+    color: #dcdcaa;
 }
 
 .number {
-    color: #d19a66;
+    color: #b5cea8;
 }
 
 .string {
-    color: #98c379;
+    color: #ce9178;
 }
 
 .comment {
-    color: #5c6370;
-    font-style: italic;
+    color: #6a9955;
 }
 
 .operator {
-    color: #56b6c2;
+    color: #d4d4d4;
+}
+
+/* Code Line Numbers */
+.code-line {
+    counter-increment: line;
+    position: relative;
+    padding-left: 3.5em;
+}
+
+.code-line:before {
+    content: counter(line);
+    position: absolute;
+    left: 0;
+    width: 2.5em;
+    text-align: right;
+    color: #6a9955;
+    padding-right: 1em;
+    user-select: none;
+}
+
+/* Code Selection */
+.code-block ::selection {
+    background: rgba(97, 218, 251, 0.2);
+}
+
+/* Scrollbar Styling */
+.code-block::-webkit-scrollbar {
+    height: 8px;
+}
+
+.code-block::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-thumb {
+    background: #3d3d3d;
+    border-radius: 4px;
+}
+
+.code-block::-webkit-scrollbar-thumb:hover {
+    background: #4d4d4d;
+}
+
+/* Code Panel Scrollbar */
+.code-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.code-panel::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.code-panel::-webkit-scrollbar-thumb {
+    background: #3d3d3d;
+    border-radius: 4px;
+}
+
+.code-panel::-webkit-scrollbar-thumb:hover {
+    background: #4d4d4d;
 }
 
 /* Code Block Header */
@@ -130,41 +204,4 @@
 
 .copy-btn:hover {
     background: #404040;
-}
-
-/* Scrollbar for Code */
-.code-block::-webkit-scrollbar {
-    height: 8px;
-}
-
-.code-block::-webkit-scrollbar-track {
-    background: #1e1e1e;
-}
-
-.code-block::-webkit-scrollbar-thumb {
-    background: #3d3d3d;
-    border-radius: 4px;
-}
-
-.code-block::-webkit-scrollbar-thumb:hover {
-    background: #4d4d4d;
-}
-
-/* Code Block Container */
-.code-container {
-    position: relative;
-    margin: 20px 0;
-}
-
-/* Language Badge */
-.language-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #363636;
-    color: #61dafb;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
 } 
