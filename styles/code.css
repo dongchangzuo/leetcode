@@ -57,17 +57,6 @@
 .code-line {
     padding: 2px 0;
     position: relative;
-    counter-increment: line;
-}
-
-.code-line::before {
-    content: counter(line);
-    position: absolute;
-    left: -40px;
-    color: #666;
-    text-align: right;
-    width: 30px;
-    user-select: none;
 }
 
 /* Syntax Highlighting */
