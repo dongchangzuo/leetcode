@@ -103,6 +103,11 @@ body {
     border: 1px solid #3d3d3d;
     height: calc(100vh - 30px);
     overflow-y: auto;
+    transition: margin-right 0.3s ease;
+}
+
+.animation-container.code-hidden {
+    margin-right: 800px;
 }
 
 .controls {
@@ -514,4 +519,41 @@ button:disabled {
     border: 1px solid #3d3d3d;
     color: #61dafb;
     font-weight: 500;
+}
+
+.code-panel {
+    position: fixed;
+    top: 0;
+    right: -800px;
+    width: 800px;
+    height: 100vh;
+    background: #2d2d2d;
+    border-left: 1px solid #3d3d3d;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.code-panel.visible {
+    right: 0;
+}
+
+.toggle-code-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: #61dafb;
+    color: #1a1a1a;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.toggle-code-btn:hover {
+    background: #4fa8c7;
 } 

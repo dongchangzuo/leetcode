@@ -330,6 +330,15 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
                 maxLength = 0;
                 charMap.clear();
                 createStringDisplay();
+                // Initialize the first character as current
+                const charBoxes = document.querySelectorAll('.char-box');
+                if (charBoxes[0]) {
+                    charBoxes[0].classList.add('current');
+                    charBoxes[0].classList.add('in-window');
+                    charBoxes[0].classList.add('window-start');
+                    charBoxes[0].classList.add('window-end');
+                }
+                updateWindowDisplay();
                 animationInterval = setInterval(animationStep, animationSpeed);
             }
 
@@ -355,6 +364,15 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
             maxLength = 0;
             charMap.clear();
             createStringDisplay();
+            // Initialize the first character as current
+            const charBoxes = document.querySelectorAll('.char-box');
+            if (charBoxes[0]) {
+                charBoxes[0].classList.add('current');
+                charBoxes[0].classList.add('in-window');
+                charBoxes[0].classList.add('window-start');
+                charBoxes[0].classList.add('window-end');
+            }
+            updateWindowDisplay();
             document.getElementById('statusDisplay').textContent = '';
             document.getElementById('resultDisplay').textContent = '';
             updateButtonStates();
