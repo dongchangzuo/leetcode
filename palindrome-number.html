@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Palindrome Number</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Palindrome Number</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given an integer x, return true if x is a palindrome, and false otherwise.</p>
+                <p>An integer is a palindrome when it reads the same forward and backward.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: x = 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>-2^31 ≤ x ≤ 2^31 - 1</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="number-display">
+                <div class="number-box" id="numberDisplay"></div>
+                <div class="comparison-box">
+                    <div class="forward-number" id="forwardNumber"></div>
+                    <div class="backward-number" id="backwardNumber"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Initial Checks</p>
+                <p class="sub-step">• If number is negative, return false</p>
+                <p class="sub-step">• If number is 0, return true</p>
+                <p class="sub-step">• If number ends with 0, return false</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Main Process</p>
+                <p class="sub-step">• Convert number to string for easy comparison</p>
+                <p class="sub-step">• Compare characters from both ends</p>
+                <p class="sub-step">• Move towards the center</p>
+                <p class="sub-step">• If all pairs match, it's a palindrome</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(log n) - where n is the input number</p>
+                <p class="sub-step">• Space Complexity: O(log n) - for storing the string representation</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="method">isPalindrome</span>(<span class="type">int</span> <span class="variable">x</span>) {</div>
+                    <div class="code-line">        <span class="keyword">if</span> (<span class="variable">x</span> < <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div>
+                    <div class="code-line">        <span class="keyword">if</span> (<span class="variable">x</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</div>
+                    <div class="code-line">        <span class="keyword">if</span> (<span class="variable">x</span> % <span class="number">10</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="type">String</span> <span class="variable">str</span> = <span class="type">String</span>.valueOf(<span class="variable">x</span>);</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">left</span> = <span class="number">0</span>;</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">right</span> = <span class="variable">str</span>.length() - <span class="number">1</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> (<span class="variable">left</span> < <span class="variable">right</span>) {</div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">str</span>.charAt(<span class="variable">left</span>) != <span class="variable">str</span>.charAt(<span class="variable">right</span>)) {</div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">            <span class="variable">left</span>++;</div>
+                    <div class="code-line">            <span class="variable">right</span>--;</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">isPalindrome</span>(<span class="variable">self</span>, <span class="variable">x</span>: <span class="type">int</span>) -> <span class="type">bool</span>:</div>
+                    <div class="code-line">        <span class="keyword">if</span> <span class="variable">x</span> < <span class="number">0</span>:</div>
+                    <div class="code-line">            <span class="keyword">return</span> <span class="keyword">False</span></div>
+                    <div class="code-line">        <span class="keyword">if</span> <span class="variable">x</span> == <span class="number">0</span>:</div>
+                    <div class="code-line">            <span class="keyword">return</span> <span class="keyword">True</span></div>
+                    <div class="code-line">        <span class="keyword">if</span> <span class="variable">x</span> % <span class="number">10</span> == <span class="number">0</span>:</div>
+                    <div class="code-line">            <span class="keyword">return</span> <span class="keyword">False</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="variable">str_x</span> = <span class="method">str</span>(<span class="variable">x</span>)</div>
+                    <div class="code-line">        <span class="variable">left</span>, <span class="variable">right</span> = <span class="number">0</span>, <span class="method">len</span>(<span class="variable">str_x</span>) - <span class="number">1</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> <span class="variable">left</span> < <span class="variable">right</span>:</div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">str_x</span>[<span class="variable">left</span>] != <span class="variable">str_x</span>[<span class="variable">right</span>]:</div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="keyword">False</span></div>
+                    <div class="code-line">            <span class="variable">left</span> += <span class="number">1</span></div>
+                    <div class="code-line">            <span class="variable">right</span> -= <span class="number">1</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="keyword">True</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .number-display {
+        background: #2d2d2d;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .number-box {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .digit-box {
+        width: 50px;
+        height: 50px;
+        background: #363636;
+        border: 2px solid #61dafb;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: #e1e1e1;
+        transition: all 0.3s ease;
+    }
+
+    .digit-box.current {
+        background: #61dafb;
+        color: #1e1e1e;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(97, 218, 251, 0.3);
+    }
+
+    .digit-box.matched {
+        background: #4caf50;
+        color: #1e1e1e;
+        border-color: #4caf50;
+    }
+
+    .digit-box.mismatched {
+        background: #f44336;
+        color: #1e1e1e;
+        border-color: #f44336;
+    }
+
+    .comparison-box {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background: #363636;
+        border-radius: 6px;
+        margin-top: 20px;
+    }
+
+    .forward-number, .backward-number {
+        font-size: 18px;
+        color: #e1e1e1;
+        padding: 10px;
+    }
+
+    .forward-number::before {
+        content: "Forward: ";
+        color: #61dafb;
+    }
+
+    .backward-number::before {
+        content: "Backward: ";
+        color: #61dafb;
+    }
+    </style>
+
+    <script>
+        // Sample input number
+        const inputNumber = 121;
+        let currentIndex = 0;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let isPalindrome = true;
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentIndex === 0;
+        }
+
+        function createNumberDisplay() {
+            const numberDisplay = document.getElementById('numberDisplay');
+            numberDisplay.innerHTML = '';
+            
+            const digits = String(inputNumber).split('');
+            digits.forEach((digit, index) => {
+                const digitBox = document.createElement('div');
+                digitBox.className = 'digit-box';
+                digitBox.textContent = digit;
+                digitBox.dataset.index = index;
+                numberDisplay.appendChild(digitBox);
+            });
+        }
+
+        function updateComparisonDisplay() {
+            const forwardNumber = document.getElementById('forwardNumber');
+            const backwardNumber = document.getElementById('backwardNumber');
+            
+            const digits = String(inputNumber).split('');
+            forwardNumber.textContent = digits.join('');
+            backwardNumber.textContent = digits.reverse().join('');
+        }
+
+        function animationStep() {
+            const digits = String(inputNumber).split('');
+            const digitBoxes = document.querySelectorAll('.digit-box');
+            
+            if (currentIndex >= Math.floor(digits.length / 2)) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').textContent = 
+                    `Final Result: ${isPalindrome ? 'Palindrome' : 'Not a Palindrome'}`;
+                updateButtonStates();
+                return;
+            }
+
+            // Remove previous highlighting
+            digitBoxes.forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('matched');
+                box.classList.remove('mismatched');
+            });
+
+            // Highlight current pair
+            const leftIndex = currentIndex;
+            const rightIndex = digits.length - 1 - currentIndex;
+            
+            digitBoxes[leftIndex].classList.add('current');
+            digitBoxes[rightIndex].classList.add('current');
+
+            // Check if digits match
+            if (digits[leftIndex] === digits[rightIndex]) {
+                digitBoxes[leftIndex].classList.add('matched');
+                digitBoxes[rightIndex].classList.add('matched');
+            } else {
+                digitBoxes[leftIndex].classList.add('mismatched');
+                digitBoxes[rightIndex].classList.add('mismatched');
+                isPalindrome = false;
+            }
+
+            // Update status display
+            let statusText = `<span class="step-number">Step ${currentIndex + 1}:</span>`;
+            statusText += `<div class="step-content">`;
+            statusText += `<div>1. Comparing digits at positions ${leftIndex} and ${rightIndex}</div>`;
+            statusText += `<div>2. Left digit: <span class="highlight">${digits[leftIndex]}</span></div>`;
+            statusText += `<div>3. Right digit: <span class="highlight">${digits[rightIndex]}</span></div>`;
+            statusText += `<div>4. Result: <span class="result">${digits[leftIndex] === digits[rightIndex] ? 'Match' : 'Mismatch'}</span></div>`;
+            statusText += `</div>`;
+            
+            document.getElementById('statusDisplay').innerHTML = statusText;
+            currentIndex++;
+        }
+
+        function startAnimation() {
+            if (animationInterval && !isPaused) return;
+
+            if (isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+            } else {
+                currentIndex = 0;
+                isPalindrome = true;
+                createNumberDisplay();
+                updateComparisonDisplay();
+                document.getElementById('statusDisplay').textContent = '';
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+
+            updateButtonStates();
+        }
+
+        function pauseAnimation() {
+            if (!animationInterval) return;
+
+            clearInterval(animationInterval);
+            isPaused = true;
+            updateButtonStates();
+        }
+
+        function resetAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            isPaused = false;
+            currentIndex = 0;
+            isPalindrome = true;
+            createNumberDisplay();
+            updateComparisonDisplay();
+            document.getElementById('statusDisplay').textContent = '';
+            updateButtonStates();
+        }
+
+        function switchTab(language) {
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createNumberDisplay();
+            updateComparisonDisplay();
+
+            // Add click event listener to the document
+            document.addEventListener('click', function (e) {
+                // Don't trigger if clicking on buttons or code panel
+                if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
+                    return;
+                }
+
+                if (animationInterval && !isPaused) {
+                    pauseAnimation();
+                } else if (isPaused) {
+                    startAnimation();
+                } else if (!animationInterval) {
+                    startAnimation();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
