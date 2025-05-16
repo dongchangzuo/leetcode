@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Longest Substring Without Repeating Characters</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Longest Substring Without Repeating Characters</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given a string s, find the length of the longest substring without repeating characters.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>0 ≤ s.length ≤ 5 * 10^4</li>
+                    <li>s consists of English letters, digits, symbols and spaces</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="string-container">
+                <div class="string-display" id="stringDisplay"></div>
+                <div class="result-display" id="resultDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Sliding Window Approach</p>
+                <p class="sub-step">• Use a sliding window to keep track of the current substring</p>
+                <p class="sub-step">• Use a hash map to store the last position of each character</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Main Loop</p>
+                <p class="sub-step">• For each character in the string:</p>
+                <p class="sub-step" style="padding-left: 60px;">- If character is in the current window:</p>
+                <p class="sub-step" style="padding-left: 90px;">• Move start pointer to the position after the previous occurrence of this character</p>
+                <p class="sub-step" style="padding-left: 90px;">• This ensures the new window starts after the duplicate character</p>
+                <p class="sub-step" style="padding-left: 60px;">- Update the character's last position</p>
+                <p class="sub-step" style="padding-left: 60px;">- Update max length if current window is longer</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Return Result</p>
+                <p class="sub-step">• Return the maximum length found</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-block">
+                <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                <div class="code-line"> <span class="keyword">public</span> <span class="type">int</span> <span class="method">lengthOfLongestSubstring</span>(<span class="type">String</span> <span class="variable">s</span>) {</div>
+                <div class="code-line"> <span class="type">Map</span>&lt;<span class="type">Character</span>, <span class="type">Integer</span>&gt; <span class="variable">map</span> = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();</div>
+                <div class="code-line"> <span class="type">int</span> <span class="variable">maxLength</span> = <span class="number">0</span>;</div>
+                <div class="code-line"> <span class="type">int</span> <span class="variable">start</span> = <span class="number">0</span>;</div>
+                <div class="code-line"></div>
+                <div class="code-line"> <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">end</span> = <span class="number">0</span>; <span class="variable">end</span> &lt; <span class="variable">s</span>.length(); <span class="variable">end</span>++) {</div>
+                <div class="code-line"> <span class="type">char</span> <span class="variable">currentChar</span> = <span class="variable">s</span>.charAt(<span class="variable">end</span>);</div>
+                <div class="code-line"> <span class="keyword">if</span> (<span class="variable">map</span>.containsKey(<span class="variable">currentChar</span>)) {</div>
+                <div class="code-line"> <span class="variable">start</span> = <span class="type">Math</span>.max(<span class="variable">start</span>, <span class="variable">map</span>.get(<span class="variable">currentChar</span>) + <span class="number">1</span>);</div>
+                <div class="code-line"> }</div>
+                <div class="code-line"> <span class="variable">map</span>.put(<span class="variable">currentChar</span>, <span class="variable">end</span>);</div>
+                <div class="code-line"> <span class="variable">maxLength</span> = <span class="type">Math</span>.max(<span class="variable">maxLength</span>, <span class="variable">end</span> - <span class="variable">start</span> + <span class="number">1</span>);</div>
+                <div class="code-line"> }</div>
+                <div class="code-line"></div>
+                <div class="code-line"> <span class="keyword">return</span> <span class="variable">maxLength</span>;</div>
+                <div class="code-line"> }</div>
+                <div class="code-line">}</div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-block">
+                <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                <div class="code-line"> <span class="keyword">def</span> <span class="method">lengthOfLongestSubstring</span>(<span class="variable">self</span>, <span class="variable">s</span>: <span class="type">str</span>) -> <span class="type">int</span>:</div>
+                <div class="code-line"> <span class="variable">char_map</span> = {}</div>
+                <div class="code-line"> <span class="variable">max_length</span> = <span class="number">0</span></div>
+                <div class="code-line"> <span class="variable">start</span> = <span class="number">0</span></div>
+                <div class="code-line"></div>
+                <div class="code-line"> <span class="keyword">for</span> <span class="variable">end</span>, <span class="variable">char</span> <span class="keyword">in</span> <span class="method">enumerate</span>(<span class="variable">s</span>):</div>
+                <div class="code-line"> <span class="keyword">if</span> <span class="variable">char</span> <span class="keyword">in</span> <span class="variable">char_map</span>:</div>
+                <div class="code-line"> <span class="variable">start</span> = <span class="method">max</span>(<span class="variable">start</span>, <span class="variable">char_map</span>[<span class="variable">char</span>] + <span class="number">1</span>)</div>
+                <div class="code-line"> <span class="variable">char_map</span>[<span class="variable">char</span>] = <span class="variable">end</span></div>
+                <div class="code-line"> <span class="variable">max_length</span> = <span class="method">max</span>(<span class="variable">max_length</span>, <span class="variable">end</span> - <span class="variable">start</span> + <span class="number">1</span>)</div>
+                <div class="code-line"></div>
+                <div class="code-line"> <span class="keyword">return</span> <span class="variable">max_length</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample input string
+        const inputString = "abcabcbb";
+        let currentIndex = 0;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let maxLength = 0;
+        let start = 0;
+        let charMap = new Map();
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentIndex === 0;
+        }
+
+        function createStringDisplay() {
+            const stringDisplay = document.getElementById('stringDisplay');
+            stringDisplay.innerHTML = '';
+            
+            // Add start pointer arrow
+            const startArrow = document.createElement('div');
+            startArrow.className = 'pointer-arrow start';
+            startArrow.setAttribute('data-label', 'start');
+            stringDisplay.appendChild(startArrow);
+            
+            // Add end pointer arrow
+            const endArrow = document.createElement('div');
+            endArrow.className = 'pointer-arrow end';
+            endArrow.setAttribute('data-label', 'end');
+            stringDisplay.appendChild(endArrow);
+            
+            for (let i = 0; i < inputString.length; i++) {
+                const char = document.createElement('div');
+                char.className = 'char-box';
+                char.textContent = inputString[i];
+                char.dataset.index = i;
+                stringDisplay.appendChild(char);
+            }
+        }
+
+        function updateWindowDisplay() {
+            const stringDisplay = document.getElementById('stringDisplay');
+            const charBoxes = stringDisplay.querySelectorAll('.char-box');
+            
+            // Remove previous highlighting
+            charBoxes.forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('duplicate');
+                box.classList.remove('in-window');
+                box.classList.remove('window-start');
+                box.classList.remove('window-end');
+            });
+
+            // Update highlighting
+            for (let i = 0; i < charBoxes.length; i++) {
+                if (i >= start && i <= currentIndex) {
+                    charBoxes[i].classList.add('in-window');
+                    if (i === start) {
+                        charBoxes[i].classList.add('window-start');
+                    }
+                    if (i === currentIndex) {
+                        charBoxes[i].classList.add('window-end');
+                    }
+                }
+            }
+            
+            // Update arrow positions
+            const startArrowElement = stringDisplay.querySelector('.pointer-arrow.start');
+            const endArrowElement = stringDisplay.querySelector('.pointer-arrow.end');
+            
+            if (charBoxes[start]) {
+                const startBox = charBoxes[start];
+                const startRect = startBox.getBoundingClientRect();
+                const containerRect = stringDisplay.getBoundingClientRect();
+                startArrowElement.style.left = (startRect.left - containerRect.left + startRect.width / 2) + 'px';
+            }
+            
+            if (charBoxes[currentIndex]) {
+                const endBox = charBoxes[currentIndex];
+                const endRect = endBox.getBoundingClientRect();
+                const containerRect = stringDisplay.getBoundingClientRect();
+                endArrowElement.style.left = (endRect.left - containerRect.left + endRect.width / 2) + 'px';
+            }
+        }
+
+        function animationStep() {
+            if (currentIndex >= inputString.length) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+                isPaused = false;
+                document.getElementById('statusDisplay').textContent = 'Animation Complete!';
+                updateButtonStates();
+                return;
+            }
+
+            const currentChar = inputString[currentIndex];
+            const charBoxes = document.querySelectorAll('.char-box');
+            
+            // Remove previous highlighting
+            charBoxes.forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('duplicate');
+            });
+
+            // Highlight current character
+            charBoxes[currentIndex].classList.add('current');
+
+            // Check for duplicate
+            if (charMap.has(currentChar) && charMap.get(currentChar) >= start) {
+                const oldStart = start;
+                start = charMap.get(currentChar) + 1;
+                charBoxes[charMap.get(currentChar)].classList.add('duplicate');
+                
+                // Update status with more detailed information for character in window
+                let statusText = `Step ${currentIndex + 1}:\n`;
+                statusText += `1. Current character: "${currentChar}"\n`;
+                statusText += `2. Found duplicate at position ${charMap.get(currentChar)}\n`;
+                statusText += `3. Moving start pointer from ${oldStart} to ${start}\n`;
+                statusText += `4. Window: "${inputString.substring(start, currentIndex + 1)}"\n`;
+                statusText += `5. Current length: ${currentIndex - start + 1}\n`;
+                statusText += `6. Max length: ${maxLength}`;
+                
+                document.getElementById('statusDisplay').innerHTML = statusText.replace(/\n/g, '<br>');
+            } else {
+                // Update status for character not in window
+                let statusText = `Step ${currentIndex + 1}:\n`;
+                statusText += `1. Current character: "${currentChar}"\n`;
+                statusText += `2. Character not in current window\n`;
+                statusText += `3. Extending window to include new character\n`;
+                statusText += `4. Window: "${inputString.substring(start, currentIndex + 1)}"\n`;
+                statusText += `5. Current length: ${currentIndex - start + 1}\n`;
+                statusText += `6. Max length: ${maxLength}`;
+                
+                document.getElementById('statusDisplay').innerHTML = statusText.replace(/\n/g, '<br>');
+            }
+
+            // Update character map
+            charMap.set(currentChar, currentIndex);
+
+            // Update max length
+            const currentLength = currentIndex - start + 1;
+            maxLength = Math.max(maxLength, currentLength);
+
+            // Update displays
+            updateWindowDisplay();
+            document.getElementById('resultDisplay').textContent = `Current Length: ${currentLength} | Max Length: ${maxLength}`;
+
+            currentIndex++;
+        }
+
+        function startAnimation() {
+            if (animationInterval && !isPaused) return;
+
+            if (isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+            } else {
+                currentIndex = 0;
+                start = 0;
+                maxLength = 0;
+                charMap.clear();
+                createStringDisplay();
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+
+            updateButtonStates();
+        }
+
+        function pauseAnimation() {
+            if (!animationInterval) return;
+
+            clearInterval(animationInterval);
+            isPaused = true;
+            updateButtonStates();
+        }
+
+        function resetAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            isPaused = false;
+            currentIndex = 0;
+            start = 0;
+            maxLength = 0;
+            charMap.clear();
+            createStringDisplay();
+            document.getElementById('statusDisplay').textContent = '';
+            document.getElementById('resultDisplay').textContent = '';
+            updateButtonStates();
+        }
+
+        function switchTab(language) {
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+
+            document.querySelectorAll('.code-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createStringDisplay();
+
+            // Add click event listener to the document
+            document.addEventListener('click', function (e) {
+                // Don't trigger if clicking on buttons or code panel
+                if (e.target.tagName === 'BUTTON' || e.target.closest('.code-panel')) {
+                    return;
+                }
+
+                if (animationInterval && !isPaused) {
+                    pauseAnimation();
+                } else if (isPaused) {
+                    startAnimation();
+                } else if (!animationInterval) {
+                    startAnimation();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html> 
