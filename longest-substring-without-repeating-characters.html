@@ -289,26 +289,30 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
                 charBoxes[charMap.get(currentChar)].classList.add('duplicate');
                 
                 // Update status with more detailed information for character in window
-                let statusText = `Step ${currentIndex + 1}:\n`;
-                statusText += `1. Current character: "${currentChar}"\n`;
-                statusText += `2. Found duplicate at position ${charMap.get(currentChar)}\n`;
-                statusText += `3. Moving start pointer from ${oldStart} to ${start}\n`;
-                statusText += `4. Window: "${inputString.substring(start, currentIndex + 1)}"\n`;
-                statusText += `5. Current length: ${currentIndex - start + 1}\n`;
-                statusText += `6. Max length: ${maxLength}`;
+                let statusText = `<span class="step-number">Step ${currentIndex + 1}:</span>`;
+                statusText += `<div class="step-content">`;
+                statusText += `<div>1. Current character: <span class="highlight">"${currentChar}"</span></div>`;
+                statusText += `<div>2. Found duplicate at position <span class="highlight">${charMap.get(currentChar)}</span></div>`;
+                statusText += `<div>3. Moving start pointer from <span class="highlight">${oldStart}</span> to <span class="highlight">${start}</span></div>`;
+                statusText += `<div>4. Window: <span class="highlight">"${inputString.substring(start, currentIndex + 1)}"</span></div>`;
+                statusText += `<div>5. Current length: <span class="result">${currentIndex - start + 1}</span></div>`;
+                statusText += `<div>6. Max length: <span class="result">${maxLength}</span></div>`;
+                statusText += `</div>`;
                 
-                document.getElementById('statusDisplay').innerHTML = statusText.replace(/\n/g, '<br>');
+                document.getElementById('statusDisplay').innerHTML = statusText;
             } else {
                 // Update status for character not in window
-                let statusText = `Step ${currentIndex + 1}:\n`;
-                statusText += `1. Current character: "${currentChar}"\n`;
-                statusText += `2. Character not in current window\n`;
-                statusText += `3. Extending window to include new character\n`;
-                statusText += `4. Window: "${inputString.substring(start, currentIndex + 1)}"\n`;
-                statusText += `5. Current length: ${currentIndex - start + 1}\n`;
-                statusText += `6. Max length: ${maxLength}`;
+                let statusText = `<span class="step-number">Step ${currentIndex + 1}:</span>`;
+                statusText += `<div class="step-content">`;
+                statusText += `<div>1. Current character: <span class="highlight">"${currentChar}"</span></div>`;
+                statusText += `<div>2. Character not in current window</div>`;
+                statusText += `<div>3. Extending window to include new character</div>`;
+                statusText += `<div>4. Window: <span class="highlight">"${inputString.substring(start, currentIndex + 1)}"</span></div>`;
+                statusText += `<div>5. Current length: <span class="result">${currentIndex - start + 1}</span></div>`;
+                statusText += `<div>6. Max length: <span class="result">${maxLength}</span></div>`;
+                statusText += `</div>`;
                 
-                document.getElementById('statusDisplay').innerHTML = statusText.replace(/\n/g, '<br>');
+                document.getElementById('statusDisplay').innerHTML = statusText;
             }
 
             // Update character map
