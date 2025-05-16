@@ -556,4 +556,21 @@ button:disabled {
 
 .toggle-code-btn:hover {
     background: #4fa8c7;
+}
+
+/* Status Display */
+.status-display {
+    text-align: center;
+    padding: 15px;
+    background: #2d2d2d;
+    border-radius: 4px;
+    border: 1px solid #3d3d3d;
+    color: #e1e1e1;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.status-display br {
+    margin: 5px 0;
 } 
