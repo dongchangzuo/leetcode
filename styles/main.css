@@ -569,7 +569,6 @@ button:disabled {
     font-size: 14px;
     line-height: 1.6;
     margin: 10px auto;
-    max-width: 600px;
 }
 
 .status-display br {
