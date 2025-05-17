@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Length of Last Word</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Length of Last Word</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given a string s consisting of words and spaces, return the length of the last word in the string.</p>
+                <p>A word is a maximal substring consisting of non-space characters only.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: s = "Hello World"
+Output: 5
+Explanation: The last word is "World" with length 5.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: s = "   fly me   to   the moon  "
+Output: 4
+Explanation: The last word is "moon" with length 4.</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: s = "luffy is still joyboy"
+Output: 6
+Explanation: The last word is "joyboy" with length 6.</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>1 ≤ s.length ≤ 10^4</li>
+                    <li>s consists of only English letters and spaces ' '</li>
+                    <li>There will be at least one word in s</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="string-container">
+                <div class="string-display" id="stringDisplay"></div>
+                <div class="result-display" id="resultDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Trim and Split Approach</p>
+                <p class="sub-step">• Trim the string to remove leading and trailing spaces</p>
+                <p class="sub-step">• Split the string by spaces</p>
+                <p class="sub-step">• Return the length of the last word</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Two Pointers Approach</p>
+                <p class="sub-step">• Start from the end of the string</p>
+                <p class="sub-step">• Skip trailing spaces</p>
+                <p class="sub-step">• Count characters until we hit a space or reach the start</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(n) - single pass through string</p>
+                <p class="sub-step">• Space Complexity: O(1) - constant extra space</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">int</span> <span class="method">lengthOfLastWord</span>(<span class="type">String</span> <span class="variable">s</span>) {</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">length</span> = <span class="number">0</span>;</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">i</span> = <span class="variable">s</span>.length() - <span class="number">1</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="comment">// Skip trailing spaces</span></div>
+                    <div class="code-line">        <span class="keyword">while</span> (<span class="variable">i</span> >= <span class="number">0</span> && <span class="variable">s</span>.charAt(<span class="variable">i</span>) == <span class="string">' '</span>) {</div>
+                    <div class="code-line">            <span class="variable">i</span>--;</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="comment">// Count characters of last word</span></div>
+                    <div class="code-line">        <span class="keyword">while</span> (<span class="variable">i</span> >= <span class="number">0</span> && <span class="variable">s</span>.charAt(<span class="variable">i</span>) != <span class="string">' '</span>) {</div>
+                    <div class="code-line">            <span class="variable">length</span>++;</div>
+                    <div class="code-line">            <span class="variable">i</span>--;</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">length</span>;</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">lengthOfLastWord</span>(<span class="variable">self</span>, <span class="variable">s</span>: <span class="type">str</span>) -> <span class="type">int</span>:</div>
+                    <div class="code-line">        <span class="comment"># Trim trailing spaces and split by spaces</span></div>
+                    <div class="code-line">        <span class="variable">words</span> = <span class="variable">s</span>.strip().split()</div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="method">len</span>(<span class="variable">words</span>[-<span class="number">1</span>]) <span class="keyword">if</span> <span class="variable">words</span> <span class="keyword">else</span> <span class="number">0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample input string
+        const s = "   fly me   to   the moon  ";
+        let currentIndex = s.length - 1;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let length = 0;
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentIndex === s.length - 1;
+        }
+
+        function createStringDisplay() {
+            const stringDisplay = document.getElementById('stringDisplay');
+            stringDisplay.innerHTML = '';
+            
+            // Add current pointer arrow
+            const currentArrow = document.createElement('div');
+            currentArrow.className = 'pointer-arrow current';
+            currentArrow.setAttribute('data-label', 'current');
+            stringDisplay.appendChild(currentArrow);
+            
+            for (let i = 0; i < s.length; i++) {
+                const charBox = document.createElement('div');
+                charBox.className = 'char-box';
+                charBox.textContent = s[i];
+                charBox.dataset.index = i;
+                stringDisplay.appendChild(charBox);
+            }
+        }
+
+        function updateStringDisplay() {
+            const stringDisplay = document.getElementById('stringDisplay');
+            const charBoxes = stringDisplay.querySelectorAll('.char-box');
+            
+            // Remove previous highlighting
+            charBoxes.forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('counted');
+            });
+
+            // Update highlighting
+            if (currentIndex >= 0) {
+                charBoxes[currentIndex].classList.add('current');
+            }
+            
+            // Highlight counted characters
+            for (let i = currentIndex + 1; i < s.length; i++) {
+                if (s[i] !== ' ') {
+                    charBoxes[i].classList.add('counted');
+                }
+            }
+            
+            // Update arrow position
+            const currentArrow = stringDisplay.querySelector('.pointer-arrow.current');
+            if (charBoxes[currentIndex]) {
+                const currentBox = charBoxes[currentIndex];
+                const currentRect = currentBox.getBoundingClientRect();
+                const containerRect = stringDisplay.getBoundingClientRect();
+                currentArrow.style.left = (currentRect.left - containerRect.left + currentRect.width / 2) + 'px';
+            }
+        }
+
+        function updateResultDisplay() {
+            const resultDisplay = document.getElementById('resultDisplay');
+            resultDisplay.innerHTML = `<h4>Length of Last Word: ${length}</h4>`;
+        }
+
+        function animationStep() {
+            if (currentIndex < 0) {
+                clearInterval(animationInterval);
+                updateButtonStates();
+                return;
+            }
+
+            if (s[currentIndex] === ' ') {
+                if (length > 0) {
+                    clearInterval(animationInterval);
+                    updateButtonStates();
+                    return;
+                }
+            } else {
+                length++;
+            }
+
+            currentIndex--;
+            updateStringDisplay();
+            updateResultDisplay();
+        }
+
+        function startAnimation() {
+            if (!animationInterval || isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+                updateButtonStates();
+            }
+        }
+
+        function pauseAnimation() {
+            if (animationInterval && !isPaused) {
+                isPaused = true;
+                clearInterval(animationInterval);
+                updateButtonStates();
+            }
+        }
+
+        function resetAnimation() {
+            clearInterval(animationInterval);
+            currentIndex = s.length - 1;
+            length = 0;
+            isPaused = false;
+            createStringDisplay();
+            updateStringDisplay();
+            updateResultDisplay();
+            updateButtonStates();
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+            if (codePanel.style.display === 'none') {
+                codePanel.style.display = 'block';
+                toggleBtn.textContent = 'Hide Code';
+            } else {
+                codePanel.style.display = 'none';
+                toggleBtn.textContent = 'Show Code';
+            }
+        }
+
+        function switchTab(language) {
+            const tabs = document.querySelectorAll('.code-tab');
+            const contents = document.querySelectorAll('.code-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        // Initialize
+        createStringDisplay();
+        updateStringDisplay();
+        updateResultDisplay();
+        updateButtonStates();
+    </script>
+</body>
+</html> 
