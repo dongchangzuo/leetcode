@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Binary</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Add Binary</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>Given two binary strings a and b, return their sum as a binary string.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: a = "11", b = "1"
+Output: "100"
+Explanation: 11 + 1 = 100 in binary</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: a = "1010", b = "1011"
+Output: "10101"
+Explanation: 1010 + 1011 = 10101 in binary</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>1 ≤ a.length, b.length ≤ 10^4</li>
+                    <li>a and b consist only of '0' or '1' characters</li>
+                    <li>Each string does not contain leading zeros except for the zero itself</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="steps-container" id="stepsContainer">
+                <!-- Steps will be added here -->
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Basic Approach</p>
+                <p class="sub-step">• Start from the rightmost digits of both strings</p>
+                <p class="sub-step">• Add the digits and any carry from previous position</p>
+                <p class="sub-step">• If sum is 2 or 3, carry 1 to next position</p>
+                <p class="sub-step">• Continue until all digits are processed</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Edge Cases</p>
+                <p class="sub-step">• Different length strings</p>
+                <p class="sub-step">• Final carry after processing all digits</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(max(n,m)) - where n and m are lengths of input strings</p>
+                <p class="sub-step">• Space Complexity: O(max(n,m)) - for storing the result</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">String</span> <span class="method">addBinary</span>(<span class="type">String</span> <span class="variable">a</span>, <span class="type">String</span> <span class="variable">b</span>) {</div>
+                    <div class="code-line">        <span class="type">StringBuilder</span> <span class="variable">result</span> = <span class="keyword">new</span> <span class="type">StringBuilder</span>();</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">i</span> = <span class="variable">a</span>.length() - <span class="number">1</span>;</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">j</span> = <span class="variable">b</span>.length() - <span class="number">1</span>;</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">carry</span> = <span class="number">0</span>;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> (<span class="variable">i</span> >= <span class="number">0</span> || <span class="variable">j</span> >= <span class="number">0</span> || <span class="variable">carry</span> > <span class="number">0</span>) {</div>
+                    <div class="code-line">            <span class="type">int</span> <span class="variable">sum</span> = <span class="variable">carry</span>;</div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">i</span> >= <span class="number">0</span>) {</div>
+                    <div class="code-line">                <span class="variable">sum</span> += <span class="variable">a</span>.charAt(<span class="variable">i</span>) - <span class="string">'0'</span>;</div>
+                    <div class="code-line">                <span class="variable">i</span>--;</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">j</span> >= <span class="number">0</span>) {</div>
+                    <div class="code-line">                <span class="variable">sum</span> += <span class="variable">b</span>.charAt(<span class="variable">j</span>) - <span class="string">'0'</span>;</div>
+                    <div class="code-line">                <span class="variable">j</span>--;</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">            <span class="variable">result</span>.append(<span class="variable">sum</span> % <span class="number">2</span>);</div>
+                    <div class="code-line">            <span class="variable">carry</span> = <span class="variable">sum</span> / <span class="number">2</span>;</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">result</span>.reverse().toString();</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">addBinary</span>(<span class="variable">self</span>, <span class="variable">a</span>: <span class="type">str</span>, <span class="variable">b</span>: <span class="type">str</span>) -> <span class="type">str</span>:</div>
+                    <div class="code-line">        <span class="variable">result</span> = []</div>
+                    <div class="code-line">        <span class="variable">i</span>, <span class="variable">j</span> = <span class="method">len</span>(<span class="variable">a</span>) - <span class="number">1</span>, <span class="method">len</span>(<span class="variable">b</span>) - <span class="number">1</span></div>
+                    <div class="code-line">        <span class="variable">carry</span> = <span class="number">0</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">while</span> <span class="variable">i</span> >= <span class="number">0</span> <span class="keyword">or</span> <span class="variable">j</span> >= <span class="number">0</span> <span class="keyword">or</span> <span class="variable">carry</span>:</div>
+                    <div class="code-line">            <span class="variable">sum</span> = <span class="variable">carry</span></div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">i</span> >= <span class="number">0</span>:</div>
+                    <div class="code-line">                <span class="variable">sum</span> += <span class="method">int</span>(<span class="variable">a</span>[<span class="variable">i</span>])</div>
+                    <div class="code-line">                <span class="variable">i</span> -= <span class="number">1</span></div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">j</span> >= <span class="number">0</span>:</div>
+                    <div class="code-line">                <span class="variable">sum</span> += <span class="method">int</span>(<span class="variable">b</span>[<span class="variable">j</span>])</div>
+                    <div class="code-line">                <span class="variable">j</span> -= <span class="number">1</span></div>
+                    <div class="code-line">            <span class="variable">result</span>.append(<span class="method">str</span>(<span class="variable">sum</span> % <span class="number">2</span>))</div>
+                    <div class="code-line">            <span class="variable">carry</span> = <span class="variable">sum</span> // <span class="number">2</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="string">''</span>.join(<span class="method">reversed</span>(<span class="variable">result</span>))</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample input strings
+        const a = "1010";
+        const b = "1011";
+        let steps = [];
+
+        // SVG constants
+        const BOX_WIDTH = 40;
+        const BOX_HEIGHT = 40;
+        const BOX_SPACING = 10;
+        const ARROW_HEIGHT = 30;
+        const START_X = 500;
+        const START_Y = 50;
+        const STEP_HEIGHT = 200;
+
+        // Initialize steps
+        function initializeSteps() {
+            steps = [];
+            let i = a.length - 1;
+            let j = b.length - 1;
+            let carry = 0;
+            let result = [];
+            let currentStep = 0;
+
+            // Add initial state
+            steps.push({
+                a: a,
+                b: b,
+                result: [],
+                carry: 0,
+                i: i,
+                j: j,
+                status: "Step 1: Start - Processing from right to left"
+            });
+
+            // Process each digit
+            while (i >= 0 || j >= 0 || carry > 0) {
+                currentStep++;
+                let sum = carry;
+                let aDigit = i >= 0 ? parseInt(a[i]) : 0;
+                let bDigit = j >= 0 ? parseInt(b[j]) : 0;
+                sum += aDigit + bDigit;
+
+                result.unshift(sum % 2);
+                carry = Math.floor(sum / 2);
+
+                steps.push({
+                    a: a,
+                    b: b,
+                    result: [...result],
+                    carry: carry,
+                    i: i,
+                    j: j,
+                    status: `Step ${currentStep + 1}: Adding digits at positions ${i} and ${j} with carry ${carry}`
+                });
+
+                i--;
+                j--;
+            }
+
+            createAllSteps();
+        }
+
+        function createSvgForStep(stepIndex) {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", "800");
+            svg.setAttribute("height", "200");
+            svg.style.background = "#1e1e1e";
+            svg.style.borderRadius = "8px";
+            svg.style.marginBottom = "20px";
+
+            const currentState = steps[stepIndex];
+
+            // Create arrow marker
+            const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+            marker.setAttribute("id", "arrowhead");
+            marker.setAttribute("markerWidth", "10");
+            marker.setAttribute("markerHeight", "7");
+            marker.setAttribute("refX", "9");
+            marker.setAttribute("refY", "3.5");
+            marker.setAttribute("orient", "auto");
+            const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+            polygon.setAttribute("points", "0 0, 10 3.5, 0 7");
+            polygon.setAttribute("fill", "#61dafb");
+            marker.appendChild(polygon);
+            defs.appendChild(marker);
+            svg.insertBefore(defs, svg.firstChild);
+
+            // Draw input strings
+            const maxLength = Math.max(a.length, b.length);
+            for (let i = 0; i < maxLength; i++) {
+                const x = START_X - i * (BOX_WIDTH + BOX_SPACING);
+                
+                // Draw box for string a
+                if (i < a.length) {
+                    const boxA = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    boxA.setAttribute("x", x);
+                    boxA.setAttribute("y", START_Y);
+                    boxA.setAttribute("width", BOX_WIDTH);
+                    boxA.setAttribute("height", BOX_HEIGHT);
+                    boxA.setAttribute("rx", "5");
+                    boxA.setAttribute("ry", "5");
+                    boxA.setAttribute("fill", "#2d2d2d");
+                    boxA.setAttribute("stroke", "#3d3d3d");
+                    boxA.setAttribute("stroke-width", "2");
+                    if (i === a.length - 1 - currentState.i) {
+                        boxA.setAttribute("fill", "#1a4b6e");
+                        boxA.setAttribute("stroke", "#61dafb");
+                    }
+                    svg.appendChild(boxA);
+
+                    const textA = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    textA.setAttribute("x", x + BOX_WIDTH/2);
+                    textA.setAttribute("y", START_Y + BOX_HEIGHT/2);
+                    textA.setAttribute("text-anchor", "middle");
+                    textA.setAttribute("dominant-baseline", "middle");
+                    textA.setAttribute("fill", "#ffffff");
+                    textA.setAttribute("font-size", "20");
+                    textA.textContent = a[a.length - 1 - i];
+                    svg.appendChild(textA);
+                }
+
+                // Draw box for string b
+                if (i < b.length) {
+                    const boxB = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    boxB.setAttribute("x", x);
+                    boxB.setAttribute("y", START_Y + BOX_HEIGHT + BOX_SPACING);
+                    boxB.setAttribute("width", BOX_WIDTH);
+                    boxB.setAttribute("height", BOX_HEIGHT);
+                    boxB.setAttribute("rx", "5");
+                    boxB.setAttribute("ry", "5");
+                    boxB.setAttribute("fill", "#2d2d2d");
+                    boxB.setAttribute("stroke", "#3d3d3d");
+                    boxB.setAttribute("stroke-width", "2");
+                    if (i === b.length - 1 - currentState.j) {
+                        boxB.setAttribute("fill", "#1a4b6e");
+                        boxB.setAttribute("stroke", "#61dafb");
+                    }
+                    svg.appendChild(boxB);
+
+                    const textB = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    textB.setAttribute("x", x + BOX_WIDTH/2);
+                    textB.setAttribute("y", START_Y + BOX_HEIGHT + BOX_SPACING + BOX_HEIGHT/2);
+                    textB.setAttribute("text-anchor", "middle");
+                    textB.setAttribute("dominant-baseline", "middle");
+                    textB.setAttribute("fill", "#ffffff");
+                    textB.setAttribute("font-size", "20");
+                    textB.textContent = b[b.length - 1 - i];
+                    svg.appendChild(textB);
+                }
+
+                // Draw result box if available
+                if (i < currentState.result.length) {
+                    const boxResult = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    boxResult.setAttribute("x", x);
+                    boxResult.setAttribute("y", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING));
+                    boxResult.setAttribute("width", BOX_WIDTH);
+                    boxResult.setAttribute("height", BOX_HEIGHT);
+                    boxResult.setAttribute("rx", "5");
+                    boxResult.setAttribute("ry", "5");
+                    boxResult.setAttribute("fill", "#2d2d2d");
+                    boxResult.setAttribute("stroke", "#3d3d3d");
+                    boxResult.setAttribute("stroke-width", "2");
+                    if (i === currentState.result.length - 1) {
+                        boxResult.setAttribute("fill", "#1a4b6e");
+                        boxResult.setAttribute("stroke", "#61dafb");
+                    }
+                    svg.appendChild(boxResult);
+
+                    const textResult = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    textResult.setAttribute("x", x + BOX_WIDTH/2);
+                    textResult.setAttribute("y", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING) + BOX_HEIGHT/2);
+                    textResult.setAttribute("text-anchor", "middle");
+                    textResult.setAttribute("dominant-baseline", "middle");
+                    textResult.setAttribute("fill", "#ffffff");
+                    textResult.setAttribute("font-size", "20");
+                    textResult.textContent = currentState.result[i];
+                    svg.appendChild(textResult);
+                }
+            }
+
+            // Draw carry if present
+            if (currentState.carry > 0) {
+                const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                carryCircle.setAttribute("cx", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
+                carryCircle.setAttribute("cy", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING) - 20);
+                carryCircle.setAttribute("r", "12");
+                carryCircle.setAttribute("fill", "#ff6b6b");
+                carryCircle.setAttribute("stroke", "#ffffff");
+                carryCircle.setAttribute("stroke-width", "2");
+                svg.appendChild(carryCircle);
+
+                const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                carryText.setAttribute("x", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
+                carryText.setAttribute("y", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING) - 20);
+                carryText.setAttribute("text-anchor", "middle");
+                carryText.setAttribute("dominant-baseline", "middle");
+                carryText.setAttribute("fill", "#ffffff");
+                carryText.setAttribute("font-size", "14");
+                carryText.setAttribute("font-weight", "bold");
+                carryText.textContent = "1";
+                svg.appendChild(carryText);
+            }
+
+            // Add status text with current result
+            const statusText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            statusText.setAttribute("x", START_X - (maxLength - 1) * (BOX_WIDTH + BOX_SPACING));
+            statusText.setAttribute("y", START_Y + 3 * (BOX_HEIGHT + BOX_SPACING) + 20);
+            statusText.setAttribute("fill", "#ffffff");
+            statusText.setAttribute("font-size", "16");
+            const resultStr = currentState.result.join('');
+            statusText.textContent = `${currentState.status} (Current Result: ${resultStr})`;
+            svg.appendChild(statusText);
+
+            return svg;
+        }
+
+        function createAllSteps() {
+            const container = document.getElementById('stepsContainer');
+            container.innerHTML = '';
+
+            steps.forEach((_, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'step-container';
+                stepDiv.appendChild(createSvgForStep(index));
+                container.appendChild(stepDiv);
+            });
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        function switchTab(language) {
+            const tabs = document.querySelectorAll('.code-tab');
+            const contents = document.querySelectorAll('.code-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        // Initialize
+        initializeSteps();
+    </script>
+</body>
+</html> 
