@@ -272,9 +272,9 @@ Thus, the result should be [1,0].</code></pre>
                     svg.appendChild(text);
                 }
 
-                // Add +1 above last digit
+                // Add +1 above last digit (index 2)
                 const plusOne = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                plusOne.setAttribute("x", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
+                plusOne.setAttribute("x", START_X + BOX_WIDTH/2);
                 plusOne.setAttribute("y", START_Y - 10);
                 plusOne.setAttribute("text-anchor", "middle");
                 plusOne.setAttribute("fill", "#4caf50");
@@ -283,9 +283,9 @@ Thus, the result should be [1,0].</code></pre>
                 plusOne.textContent = "+1";
                 svg.appendChild(plusOne);
 
-                // Add arrow pointing to last digit
+                // Add arrow pointing to last digit (index 2)
                 const arrow = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                const x = START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2;
+                const x = START_X + BOX_WIDTH/2;
                 arrow.setAttribute("d", `M ${x} ${START_Y - ARROW_HEIGHT} L ${x} ${START_Y}`);
                 arrow.setAttribute("fill", "none");
                 arrow.setAttribute("stroke", "#61dafb");
@@ -313,7 +313,7 @@ Thus, the result should be [1,0].</code></pre>
                     box.setAttribute("stroke-width", "2");
                     
                     // Highlight last box
-                    if (i === 2) {
+                    if (i === 0) {
                         box.setAttribute("fill", "#1a4b6e");
                         box.setAttribute("stroke", "#61dafb");
                     }
@@ -328,7 +328,7 @@ Thus, the result should be [1,0].</code></pre>
                     text.setAttribute("dominant-baseline", "middle");
                     text.setAttribute("fill", "#ffffff");
                     text.setAttribute("font-size", "24");
-                    text.textContent = i === 2 ? "0" : "9";
+                    text.textContent = i === 0 ? "0" : "9";
                     svg.appendChild(text);
                 }
 
@@ -388,13 +388,13 @@ Thus, the result should be [1,0].</code></pre>
                     text.setAttribute("dominant-baseline", "middle");
                     text.setAttribute("fill", "#ffffff");
                     text.setAttribute("font-size", "24");
-                    text.textContent = i === 0 ? "9" : "0";
+                    text.textContent = i === 2 ? "9" : "0";
                     svg.appendChild(text);
                 }
 
                 // Add carry 1 above first digit
                 const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                carryCircle.setAttribute("cx", START_X + BOX_WIDTH/2);
+                carryCircle.setAttribute("cx", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
                 carryCircle.setAttribute("cy", START_Y - 20);
                 carryCircle.setAttribute("r", "12");
                 carryCircle.setAttribute("fill", "#ff6b6b");
@@ -403,7 +403,7 @@ Thus, the result should be [1,0].</code></pre>
                 svg.appendChild(carryCircle);
 
                 const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                carryText.setAttribute("x", START_X + BOX_WIDTH/2);
+                carryText.setAttribute("x", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
                 carryText.setAttribute("y", START_Y - 20);
                 carryText.setAttribute("text-anchor", "middle");
                 carryText.setAttribute("dominant-baseline", "middle");
@@ -458,9 +458,9 @@ Thus, the result should be [1,0].</code></pre>
                     svg.appendChild(text);
                 }
 
-                // Add carry 1 above first box
+                // Add carry 1 above dashed box (leftmost box)
                 const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                carryCircle.setAttribute("cx", START_X + BOX_WIDTH/2);
+                carryCircle.setAttribute("cx", START_X - 3 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
                 carryCircle.setAttribute("cy", START_Y - 20);
                 carryCircle.setAttribute("r", "12");
                 carryCircle.setAttribute("fill", "#ff6b6b");
@@ -469,7 +469,7 @@ Thus, the result should be [1,0].</code></pre>
                 svg.appendChild(carryCircle);
 
                 const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                carryText.setAttribute("x", START_X + BOX_WIDTH/2);
+                carryText.setAttribute("x", START_X - 3 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
                 carryText.setAttribute("y", START_Y - 20);
                 carryText.setAttribute("text-anchor", "middle");
                 carryText.setAttribute("dominant-baseline", "middle");
