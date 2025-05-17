@@ -61,24 +61,8 @@ Thus, the result should be [1,0].</code></pre>
 
         <!-- Animation Container -->
         <div class="animation-container">
-            <div class="controls">
-                <div class="button-group">
-                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
-                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
-                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
-                </div>
-                <div class="speed-control">
-                    <label for="speedControl">Speed:</label>
-                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
-                    <span id="speedValue">1.5s</span>
-                </div>
-            </div>
-
-            <div class="status-display" id="statusDisplay"></div>
-
-            <div class="array-container">
-                <div class="array-display" id="arrayDisplay"></div>
-                <div class="result-display" id="resultDisplay"></div>
+            <div class="steps-container" id="stepsContainer">
+                <!-- Steps will be added here -->
             </div>
         </div>
 
@@ -172,159 +156,378 @@ Thus, the result should be [1,0].</code></pre>
     <script>
         // Sample input array
         const digits = [9, 9, 9];
-        let currentIndex = digits.length - 1;
-        let animationInterval;
-        let isPaused = false;
-        let animationSpeed = 1500;
+        let steps = [];
         let result = [...digits];
 
-        // Add speed control
-        const speedControl = document.getElementById('speedControl');
-        const speedValue = document.getElementById('speedValue');
-        const startBtn = document.getElementById('startBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const resetBtn = document.getElementById('resetBtn');
+        // SVG constants
+        const BOX_WIDTH = 60;
+        const BOX_HEIGHT = 60;
+        const BOX_SPACING = 20;
+        const ARROW_HEIGHT = 30;
+        const START_X = 100;
+        const START_Y = 50;
+        const STEP_HEIGHT = 200;
 
-        speedControl.addEventListener('input', (e) => {
-            animationSpeed = parseInt(e.target.value);
-            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
-            if (animationInterval && !isPaused) {
-                clearInterval(animationInterval);
-                animationInterval = setInterval(animationStep, animationSpeed);
-            }
-        });
-
-        function updateButtonStates() {
-            startBtn.disabled = animationInterval && !isPaused;
-            pauseBtn.disabled = !animationInterval || isPaused;
-            resetBtn.disabled = !animationInterval && currentIndex === digits.length - 1;
-        }
-
-        function createArrayDisplay() {
-            const arrayDisplay = document.getElementById('arrayDisplay');
-            arrayDisplay.innerHTML = '';
+        // Initialize steps
+        function initializeSteps() {
+            steps = [];
+            result = [...digits];
+            let currentIndex = digits.length - 1;
             
-            // Add current pointer arrow
-            const currentArrow = document.createElement('div');
-            currentArrow.className = 'pointer-arrow current';
-            currentArrow.setAttribute('data-label', 'current');
-            arrayDisplay.appendChild(currentArrow);
-            
-            // Use result array length instead of digits length
-            for (let i = 0; i < result.length; i++) {
-                const numBox = document.createElement('div');
-                numBox.className = 'num-box';
-                numBox.textContent = result[i];
-                numBox.dataset.index = i;
-                arrayDisplay.appendChild(numBox);
-            }
-        }
-
-        function updateArrayDisplay() {
-            const arrayDisplay = document.getElementById('arrayDisplay');
-            const numBoxes = arrayDisplay.querySelectorAll('.num-box');
-            
-            // Remove previous highlighting
-            numBoxes.forEach(box => {
-                box.classList.remove('current');
-                box.classList.remove('changed');
-                box.classList.remove('carry');
+            // Add initial state
+            steps.push({
+                result: [...result],
+                currentIndex: currentIndex,
+                status: "Step 1: Start - Processing from right to left"
             });
 
-            // Update highlighting
-            if (currentIndex >= 0) {
-                numBoxes[currentIndex].classList.add('current');
+            // Process each digit
+            while (currentIndex >= 0) {
+                if (result[currentIndex] < 9) {
+                    result[currentIndex]++;
+                    steps.push({
+                        result: [...result],
+                        currentIndex: -1,
+                        status: `Step ${steps.length + 1}: Digit at index ${currentIndex} incremented to ${result[currentIndex]}`
+                    });
+                    break;
+                } else {
+                    result[currentIndex] = 0;
+                    steps.push({
+                        result: [...result],
+                        currentIndex: currentIndex,
+                        status: `Step ${steps.length + 1}: Digit at index ${currentIndex} set to 0 (carry 1)`
+                    });
+                    currentIndex--;
+                }
             }
-            
-            // Highlight changed numbers and carry
-            for (let i = currentIndex + 1; i < result.length; i++) {
-                if (i < digits.length && result[i] !== digits[i]) {
-                    numBoxes[i].classList.add('changed');
-                    if (result[i] === 0) {
-                        numBoxes[i].classList.add('carry');
+
+            // If all digits were 9, add final step with new array
+            if (result.every(digit => digit === 0)) {
+                result = [1, ...Array(digits.length).fill(0)];
+                steps.push({
+                    result: [...result],
+                    currentIndex: -1,
+                    status: `Step ${steps.length + 1}: All digits were 9, adding new leading 1`
+                });
+            }
+
+            createAllSteps();
+        }
+
+        function createSvgForStep(stepIndex) {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", "800");
+            svg.setAttribute("height", "150");
+            svg.style.background = "#1e1e1e";
+            svg.style.borderRadius = "8px";
+            svg.style.marginBottom = "20px";
+
+            const currentState = steps[stepIndex];
+
+            // Create arrow marker
+            const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+            marker.setAttribute("id", "arrowhead");
+            marker.setAttribute("markerWidth", "10");
+            marker.setAttribute("markerHeight", "7");
+            marker.setAttribute("refX", "9");
+            marker.setAttribute("refY", "3.5");
+            marker.setAttribute("orient", "auto");
+            const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+            polygon.setAttribute("points", "0 0, 10 3.5, 0 7");
+            polygon.setAttribute("fill", "#61dafb");
+            marker.appendChild(polygon);
+            defs.appendChild(marker);
+            svg.insertBefore(defs, svg.firstChild);
+
+            // Step 1: Initial state
+            if (stepIndex === 0) {
+                // Create boxes for [9,9,9]
+                for (let i = 0; i < 3; i++) {
+                    const x = START_X + i * (BOX_WIDTH + BOX_SPACING);
+                    
+                    // Create box
+                    const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    box.setAttribute("x", x);
+                    box.setAttribute("y", START_Y);
+                    box.setAttribute("width", BOX_WIDTH);
+                    box.setAttribute("height", BOX_HEIGHT);
+                    box.setAttribute("rx", "5");
+                    box.setAttribute("ry", "5");
+                    box.setAttribute("fill", "#2d2d2d");
+                    box.setAttribute("stroke", "#3d3d3d");
+                    box.setAttribute("stroke-width", "2");
+                    svg.appendChild(box);
+
+                    // Create digit text
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", x + BOX_WIDTH/2);
+                    text.setAttribute("y", START_Y + BOX_HEIGHT/2);
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.setAttribute("fill", "#ffffff");
+                    text.setAttribute("font-size", "24");
+                    text.textContent = "9";
+                    svg.appendChild(text);
+                }
+
+                // Add +1 above last digit
+                const plusOne = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                plusOne.setAttribute("x", START_X + 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
+                plusOne.setAttribute("y", START_Y - 10);
+                plusOne.setAttribute("text-anchor", "middle");
+                plusOne.setAttribute("fill", "#4caf50");
+                plusOne.setAttribute("font-size", "20");
+                plusOne.setAttribute("font-weight", "bold");
+                plusOne.textContent = "+1";
+                svg.appendChild(plusOne);
+
+                // Add arrow pointing to last digit
+                const arrow = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const x = START_X + 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2;
+                arrow.setAttribute("d", `M ${x} ${START_Y - ARROW_HEIGHT} L ${x} ${START_Y}`);
+                arrow.setAttribute("fill", "none");
+                arrow.setAttribute("stroke", "#61dafb");
+                arrow.setAttribute("stroke-width", "2");
+                arrow.setAttribute("marker-end", "url(#arrowhead)");
+                svg.appendChild(arrow);
+            }
+
+            // Step 2: Last digit becomes 0, carry 1
+            if (stepIndex === 1) {
+                // Create boxes for [9,9,0]
+                for (let i = 0; i < 3; i++) {
+                    const x = START_X + i * (BOX_WIDTH + BOX_SPACING);
+                    
+                    // Create box
+                    const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    box.setAttribute("x", x);
+                    box.setAttribute("y", START_Y);
+                    box.setAttribute("width", BOX_WIDTH);
+                    box.setAttribute("height", BOX_HEIGHT);
+                    box.setAttribute("rx", "5");
+                    box.setAttribute("ry", "5");
+                    box.setAttribute("fill", "#2d2d2d");
+                    box.setAttribute("stroke", "#3d3d3d");
+                    box.setAttribute("stroke-width", "2");
+                    
+                    // Highlight last box
+                    if (i === 2) {
+                        box.setAttribute("fill", "#1a4b6e");
+                        box.setAttribute("stroke", "#61dafb");
                     }
+                    
+                    svg.appendChild(box);
+
+                    // Create digit text
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", x + BOX_WIDTH/2);
+                    text.setAttribute("y", START_Y + BOX_HEIGHT/2);
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.setAttribute("fill", "#ffffff");
+                    text.setAttribute("font-size", "24");
+                    text.textContent = i === 2 ? "0" : "9";
+                    svg.appendChild(text);
+                }
+
+                // Add carry 1 above middle digit
+                const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                carryCircle.setAttribute("cx", START_X + BOX_WIDTH/2 + 20);
+                carryCircle.setAttribute("cy", START_Y - ARROW_HEIGHT/2);
+                carryCircle.setAttribute("r", "15");
+                carryCircle.setAttribute("fill", "#ff6b6b");
+                carryCircle.setAttribute("stroke", "#ffffff");
+                carryCircle.setAttribute("stroke-width", "2");
+                svg.appendChild(carryCircle);
+
+                const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                carryText.setAttribute("x", START_X + BOX_WIDTH/2 + 20);
+                carryText.setAttribute("y", START_Y - ARROW_HEIGHT/2);
+                carryText.setAttribute("text-anchor", "middle");
+                carryText.setAttribute("dominant-baseline", "middle");
+                carryText.setAttribute("fill", "#ffffff");
+                carryText.setAttribute("font-size", "16");
+                carryText.setAttribute("font-weight", "bold");
+                carryText.textContent = "1";
+                svg.appendChild(carryText);
+            }
+
+            // Step 3: Middle digit becomes 0, carry 1
+            if (stepIndex === 2) {
+                // Create boxes for [9,0,0]
+                for (let i = 0; i < 3; i++) {
+                    const x = START_X + i * (BOX_WIDTH + BOX_SPACING);
+                    
+                    // Create box
+                    const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    box.setAttribute("x", x);
+                    box.setAttribute("y", START_Y);
+                    box.setAttribute("width", BOX_WIDTH);
+                    box.setAttribute("height", BOX_HEIGHT);
+                    box.setAttribute("rx", "5");
+                    box.setAttribute("ry", "5");
+                    box.setAttribute("fill", "#2d2d2d");
+                    box.setAttribute("stroke", "#3d3d3d");
+                    box.setAttribute("stroke-width", "2");
+                    
+                    // Highlight middle box
+                    if (i === 1) {
+                        box.setAttribute("fill", "#1a4b6e");
+                        box.setAttribute("stroke", "#61dafb");
+                    }
+                    
+                    svg.appendChild(box);
+
+                    // Create digit text
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", x + BOX_WIDTH/2);
+                    text.setAttribute("y", START_Y + BOX_HEIGHT/2);
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.setAttribute("fill", "#ffffff");
+                    text.setAttribute("font-size", "24");
+                    text.textContent = i === 0 ? "9" : "0";
+                    svg.appendChild(text);
+                }
+
+                // Add carry 1 above first digit
+                const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                carryCircle.setAttribute("cx", START_X + BOX_WIDTH/2 + 20);
+                carryCircle.setAttribute("cy", START_Y - ARROW_HEIGHT/2);
+                carryCircle.setAttribute("r", "15");
+                carryCircle.setAttribute("fill", "#ff6b6b");
+                carryCircle.setAttribute("stroke", "#ffffff");
+                carryCircle.setAttribute("stroke-width", "2");
+                svg.appendChild(carryCircle);
+
+                const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                carryText.setAttribute("x", START_X + BOX_WIDTH/2 + 20);
+                carryText.setAttribute("y", START_Y - ARROW_HEIGHT/2);
+                carryText.setAttribute("text-anchor", "middle");
+                carryText.setAttribute("dominant-baseline", "middle");
+                carryText.setAttribute("fill", "#ffffff");
+                carryText.setAttribute("font-size", "16");
+                carryText.setAttribute("font-weight", "bold");
+                carryText.textContent = "1";
+                svg.appendChild(carryText);
+            }
+
+            // Step 4: First digit becomes 0, carry 1
+            if (stepIndex === 3) {
+                // Create boxes for [0,0,0] with new box
+                for (let i = 0; i < 4; i++) {
+                    const x = START_X + i * (BOX_WIDTH + BOX_SPACING);
+                    
+                    // Create box
+                    const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    box.setAttribute("x", x);
+                    box.setAttribute("y", START_Y);
+                    box.setAttribute("width", BOX_WIDTH);
+                    box.setAttribute("height", BOX_HEIGHT);
+                    box.setAttribute("rx", "5");
+                    box.setAttribute("ry", "5");
+                    box.setAttribute("fill", "#2d2d2d");
+                    box.setAttribute("stroke", "#3d3d3d");
+                    box.setAttribute("stroke-width", "2");
+                    
+                    // Make first box dashed
+                    if (i === 0) {
+                        box.setAttribute("stroke-dasharray", "5,5");
+                        box.setAttribute("stroke", "#61dafb");
+                    }
+                    
+                    svg.appendChild(box);
+
+                    // Create digit text
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", x + BOX_WIDTH/2);
+                    text.setAttribute("y", START_Y + BOX_HEIGHT/2);
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.setAttribute("fill", "#ffffff");
+                    text.setAttribute("font-size", "24");
+                    text.textContent = "0";
+                    svg.appendChild(text);
+                }
+
+                // Add carry 1 above first box
+                const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                carryCircle.setAttribute("cx", START_X + BOX_WIDTH/2);
+                carryCircle.setAttribute("cy", START_Y - 20);
+                carryCircle.setAttribute("r", "12");
+                carryCircle.setAttribute("fill", "#ff6b6b");
+                carryCircle.setAttribute("stroke", "#ffffff");
+                carryCircle.setAttribute("stroke-width", "2");
+                svg.appendChild(carryCircle);
+
+                const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                carryText.setAttribute("x", START_X + BOX_WIDTH/2);
+                carryText.setAttribute("y", START_Y - 20);
+                carryText.setAttribute("text-anchor", "middle");
+                carryText.setAttribute("dominant-baseline", "middle");
+                carryText.setAttribute("fill", "#ffffff");
+                carryText.setAttribute("font-size", "14");
+                carryText.setAttribute("font-weight", "bold");
+                carryText.textContent = "1";
+                svg.appendChild(carryText);
+            }
+
+            // Step 5: Final result [1,0,0,0]
+            if (stepIndex === 4) {
+                // Create boxes for [1,0,0,0]
+                for (let i = 0; i < 4; i++) {
+                    const x = START_X + i * (BOX_WIDTH + BOX_SPACING);
+                    
+                    // Create box
+                    const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    box.setAttribute("x", x);
+                    box.setAttribute("y", START_Y);
+                    box.setAttribute("width", BOX_WIDTH);
+                    box.setAttribute("height", BOX_HEIGHT);
+                    box.setAttribute("rx", "5");
+                    box.setAttribute("ry", "5");
+                    box.setAttribute("fill", "#2d2d2d");
+                    box.setAttribute("stroke", "#3d3d3d");
+                    box.setAttribute("stroke-width", "2");
+                    svg.appendChild(box);
+
+                    // Create digit text
+                    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    text.setAttribute("x", x + BOX_WIDTH/2);
+                    text.setAttribute("y", START_Y + BOX_HEIGHT/2);
+                    text.setAttribute("text-anchor", "middle");
+                    text.setAttribute("dominant-baseline", "middle");
+                    text.setAttribute("fill", "#ffffff");
+                    text.setAttribute("font-size", "24");
+                    text.textContent = i === 0 ? "1" : "0";
+                    svg.appendChild(text);
                 }
             }
-            
-            // Update arrow position
-            const currentArrow = arrayDisplay.querySelector('.pointer-arrow.current');
-            if (numBoxes[currentIndex]) {
-                const currentBox = numBoxes[currentIndex];
-                const currentRect = currentBox.getBoundingClientRect();
-                const containerRect = arrayDisplay.getBoundingClientRect();
-                currentArrow.style.left = (currentRect.left - containerRect.left + currentRect.width / 2) + 'px';
-            }
 
-            // Update numbers
-            for (let i = 0; i < result.length; i++) {
-                numBoxes[i].textContent = result[i];
-            }
+            // Add status text
+            const statusText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            statusText.setAttribute("x", START_X);
+            statusText.setAttribute("y", START_Y + BOX_HEIGHT + 30);
+            statusText.setAttribute("fill", "#ffffff");
+            statusText.setAttribute("font-size", "16");
+            statusText.textContent = currentState.status;
+            svg.appendChild(statusText);
+
+            return svg;
         }
 
-        function updateResultDisplay() {
-            const resultDisplay = document.getElementById('resultDisplay');
-            if (currentIndex < 0) {
-                resultDisplay.innerHTML = `<h4>Result: [${result.join(', ')}]</h4>`;
-            } else {
-                let status = `Processing digit at index ${currentIndex}`;
-                if (result[currentIndex] === 0) {
-                    status += ' (Carry 1 to next digit)';
-                }
-                resultDisplay.innerHTML = `<h4>${status}</h4>`;
-            }
-        }
+        function createAllSteps() {
+            const container = document.getElementById('stepsContainer');
+            container.innerHTML = '';
 
-        function animationStep() {
-            if (currentIndex < 0) {
-                // If we've processed all digits and still have a carry
-                if (result.every(digit => digit === 0)) {
-                    // Create new array with leading 1
-                    result = [1, ...Array(digits.length).fill(0)];
-                    // Recreate the display with the new array
-                    createArrayDisplay();
-                }
-                clearInterval(animationInterval);
-                updateButtonStates();
-                return;
-            }
-
-            if (result[currentIndex] < 9) {
-                result[currentIndex]++;
-                currentIndex = -1;
-            } else {
-                result[currentIndex] = 0;
-                currentIndex--;
-            }
-
-            updateArrayDisplay();
-            updateResultDisplay();
-        }
-
-        function startAnimation() {
-            if (!animationInterval || isPaused) {
-                isPaused = false;
-                animationInterval = setInterval(animationStep, animationSpeed);
-                updateButtonStates();
-            }
-        }
-
-        function pauseAnimation() {
-            if (animationInterval && !isPaused) {
-                isPaused = true;
-                clearInterval(animationInterval);
-                updateButtonStates();
-            }
-        }
-
-        function resetAnimation() {
-            clearInterval(animationInterval);
-            currentIndex = digits.length - 1;
-            result = [...digits];
-            isPaused = false;
-            createArrayDisplay();
-            updateArrayDisplay();
-            updateResultDisplay();
-            updateButtonStates();
+            steps.forEach((_, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'step-container';
+                stepDiv.appendChild(createSvgForStep(index));
+                container.appendChild(stepDiv);
+            });
         }
 
         function toggleCodePanel() {
@@ -355,15 +558,8 @@ Thus, the result should be [1,0].</code></pre>
             document.getElementById(`${language}Code`).classList.add('active');
         }
 
-        // Initialize the layout
-        document.addEventListener('DOMContentLoaded', function () {
-            const animationContainer = document.getElementById('animationContainer');
-            animationContainer.style.marginRight = '800px';
-            createArrayDisplay();
-            updateArrayDisplay();
-            updateResultDisplay();
-            updateButtonStates();
-        });
+        // Initialize
+        initializeSteps();
     </script>
 </body>
 </html> 
