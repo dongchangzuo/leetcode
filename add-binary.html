@@ -204,7 +204,6 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
                 j--;
             }
 
-            console.log(steps);
 
             createAllSteps();
         }
@@ -237,7 +236,10 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
 
             // Draw input strings
             const maxLength = Math.max(a.length, b.length);
-            for (let i = 0; i < maxLength; i++) {
+            const resultLength = currentState.result.length;
+            const totalLength = Math.max(maxLength, resultLength);
+
+            for (let i = 0; i < totalLength; i++) {
                 const x = START_X - i * (BOX_WIDTH + BOX_SPACING);
                 
                 // Draw box for string a
@@ -299,7 +301,7 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
                 }
 
                 // Draw result box if available
-                if (i < currentState.result.length) {
+                if (i < resultLength) {
                     const boxResult = document.createElementNS("http://www.w3.org/2000/svg", "rect");
                     boxResult.setAttribute("x", x);
                     boxResult.setAttribute("y", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING));
@@ -310,7 +312,7 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
                     boxResult.setAttribute("fill", "#2d2d2d");
                     boxResult.setAttribute("stroke", "#3d3d3d");
                     boxResult.setAttribute("stroke-width", "2");
-                    if (i === currentState.result.length - 1) {
+                    if (i === resultLength - 1) {
                         boxResult.setAttribute("fill", "#1a4b6e");
                         boxResult.setAttribute("stroke", "#61dafb");
                     }
@@ -323,7 +325,7 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
                     textResult.setAttribute("dominant-baseline", "middle");
                     textResult.setAttribute("fill", "#ffffff");
                     textResult.setAttribute("font-size", "20");
-                    textResult.textContent = currentState.result[currentState.result.length - 1 - i];
+                    textResult.textContent = currentState.result[resultLength - 1 - i];
                     svg.appendChild(textResult);
                 }
             }
@@ -353,7 +355,7 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
 
             // Add status text with current result
             const statusText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            statusText.setAttribute("x", START_X - (maxLength - 1) * (BOX_WIDTH + BOX_SPACING));
+            statusText.setAttribute("x", START_X - (totalLength - 1) * (BOX_WIDTH + BOX_SPACING));
             statusText.setAttribute("y", START_Y + 3 * (BOX_HEIGHT + BOX_SPACING) + 20);
             statusText.setAttribute("fill", "#ffffff");
             statusText.setAttribute("font-size", "16");
