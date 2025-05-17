@@ -333,7 +333,7 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
             // Draw carry if present
             if (currentState.carry > 0) {
                 const carryCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                carryCircle.setAttribute("cx", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
+                carryCircle.setAttribute("cx", START_X - resultLength * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
                 carryCircle.setAttribute("cy", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING) - 20);
                 carryCircle.setAttribute("r", "12");
                 carryCircle.setAttribute("fill", "#ff6b6b");
@@ -342,7 +342,7 @@ Explanation: 1010 + 1011 = 10101 in binary</code></pre>
                 svg.appendChild(carryCircle);
 
                 const carryText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                carryText.setAttribute("x", START_X - 2 * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
+                carryText.setAttribute("x", START_X - resultLength * (BOX_WIDTH + BOX_SPACING) + BOX_WIDTH/2);
                 carryText.setAttribute("y", START_Y + 2 * (BOX_HEIGHT + BOX_SPACING) - 20);
                 carryText.setAttribute("text-anchor", "middle");
                 carryText.setAttribute("dominant-baseline", "middle");
