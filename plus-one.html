@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plus One</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/code.css">
+</head>
+
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <div class="main-container">
+        <!-- Problem Panel -->
+        <div class="problem-panel">
+            <h2>Plus One</h2>
+
+            <div class="problem-section">
+                <h3>Problem Description</h3>
+                <p>You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer.</p>
+                <p>The digits are ordered from most significant to least significant in left-to-right order.</p>
+                <p>The large integer does not contain any leading 0's.</p>
+                <p>Increment the large integer by one and return the resulting array of digits.</p>
+            </div>
+
+            <div class="problem-section">
+                <h3>Examples</h3>
+                <div class="example-box">
+                    <h4>Example 1:</h4>
+                    <pre><code>Input: digits = [1,2,3]
+Output: [1,2,4]
+Explanation: The array represents the integer 123.
+Incrementing by one gives 123 + 1 = 124.
+Thus, the result should be [1,2,4].</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 2:</h4>
+                    <pre><code>Input: digits = [4,3,2,1]
+Output: [4,3,2,2]
+Explanation: The array represents the integer 4321.
+Incrementing by one gives 4321 + 1 = 4322.
+Thus, the result should be [4,3,2,2].</code></pre>
+                </div>
+                <div class="example-box">
+                    <h4>Example 3:</h4>
+                    <pre><code>Input: digits = [9]
+Output: [1,0]
+Explanation: The array represents the integer 9.
+Incrementing by one gives 9 + 1 = 10.
+Thus, the result should be [1,0].</code></pre>
+                </div>
+            </div>
+
+            <div class="problem-section">
+                <h3>Constraints</h3>
+                <ul class="constraint-list">
+                    <li>1 ≤ digits.length ≤ 100</li>
+                    <li>0 ≤ digits[i] ≤ 9</li>
+                    <li>digits does not contain any leading 0's</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animation Container -->
+        <div class="animation-container">
+            <div class="controls">
+                <div class="button-group">
+                    <button class="primary" onclick="startAnimation()" id="startBtn">Start</button>
+                    <button class="warning" onclick="pauseAnimation()" id="pauseBtn" disabled>Pause</button>
+                    <button class="primary" onclick="resetAnimation()" id="resetBtn">Reset</button>
+                </div>
+                <div class="speed-control">
+                    <label for="speedControl">Speed:</label>
+                    <input type="range" id="speedControl" min="500" max="3000" value="1500" step="100">
+                    <span id="speedValue">1.5s</span>
+                </div>
+            </div>
+
+            <div class="status-display" id="statusDisplay"></div>
+
+            <div class="array-container">
+                <div class="array-display" id="arrayDisplay"></div>
+                <div class="result-display" id="resultDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-container" id="descriptionContainer">
+            <h3>Algorithm Steps</h3>
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">1. Basic Approach</p>
+                <p class="sub-step">• Start from the last digit</p>
+                <p class="sub-step">• Add 1 to the current digit</p>
+                <p class="sub-step">• If the result is less than 10, we're done</p>
+                <p class="sub-step">• If the result is 10, set current digit to 0 and carry 1 to the next digit</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d; margin-bottom: 20px;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">2. Edge Cases</p>
+                <p class="sub-step">• If all digits are 9, we need to add a new digit at the beginning</p>
+                <p class="sub-step">• Example: [9,9,9] becomes [1,0,0,0]</p>
+            </div>
+
+            <div style="background: #363636; padding: 20px; border-radius: 8px; border: 1px solid #3d3d3d;">
+                <p style="color: #61dafb; font-weight: 600; margin-bottom: 15px;">3. Time and Space Complexity</p>
+                <p class="sub-step">• Time Complexity: O(n) - worst case when we need to add a new digit</p>
+                <p class="sub-step">• Space Complexity: O(n) - worst case when we need to create a new array</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Code Panel -->
+    <button class="toggle-code-btn" onclick="toggleCodePanel()" id="toggleCodeBtn">Show Code</button>
+
+    <div class="code-panel" id="codePanel">
+        <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab('java')">Java</button>
+            <button class="code-tab" onclick="switchTab('python')">Python</button>
+        </div>
+
+        <div id="javaCode" class="code-content active">
+            <div class="code-container">
+                <div class="language-badge">Java</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">public</span> <span class="type">class</span> <span class="variable">Solution</span> {</div>
+                    <div class="code-line">    <span class="keyword">public</span> <span class="type">int</span>[] <span class="method">plusOne</span>(<span class="type">int</span>[] <span class="variable">digits</span>) {</div>
+                    <div class="code-line">        <span class="type">int</span> <span class="variable">n</span> = <span class="variable">digits</span>.length;</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="comment">// Start from the last digit</span></div>
+                    <div class="code-line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> = <span class="variable">n</span> - <span class="number">1</span>; <span class="variable">i</span> >= <span class="number">0</span>; <span class="variable">i</span>--) {</div>
+                    <div class="code-line">            <span class="comment">// If current digit is less than 9, just increment and return</span></div>
+                    <div class="code-line">            <span class="keyword">if</span> (<span class="variable">digits</span>[<span class="variable">i</span>] < <span class="number">9</span>) {</div>
+                    <div class="code-line">                <span class="variable">digits</span>[<span class="variable">i</span>]++;</div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="variable">digits</span>;</div>
+                    <div class="code-line">            }</div>
+                    <div class="code-line">            <span class="comment">// If current digit is 9, set it to 0</span></div>
+                    <div class="code-line">            <span class="variable">digits</span>[<span class="variable">i</span>] = <span class="number">0</span>;</div>
+                    <div class="code-line">        }</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="comment">// If we reach here, all digits were 9</span></div>
+                    <div class="code-line">        <span class="type">int</span>[] <span class="variable">newDigits</span> = <span class="keyword">new</span> <span class="type">int</span>[<span class="variable">n</span> + <span class="number">1</span>];</div>
+                    <div class="code-line">        <span class="variable">newDigits</span>[<span class="number">0</span>] = <span class="number">1</span>;</div>
+                    <div class="code-line">        <span class="keyword">return</span> <span class="variable">newDigits</span>;</div>
+                    <div class="code-line">    }</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pythonCode" class="code-content">
+            <div class="code-container">
+                <div class="language-badge">Python</div>
+                <div class="code-block">
+                    <div class="code-line"><span class="keyword">class</span> <span class="type">Solution</span>:</div>
+                    <div class="code-line">    <span class="keyword">def</span> <span class="method">plusOne</span>(<span class="variable">self</span>, <span class="variable">digits</span>: <span class="type">List</span>[<span class="type">int</span>]) -> <span class="type">List</span>[<span class="type">int</span>]:</div>
+                    <div class="code-line">        <span class="variable">n</span> = <span class="method">len</span>(<span class="variable">digits</span>)</div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="comment"># Start from the last digit</span></div>
+                    <div class="code-line">        <span class="keyword">for</span> <span class="variable">i</span> <span class="keyword">in</span> <span class="method">range</span>(<span class="variable">n</span> - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</div>
+                    <div class="code-line">            <span class="comment"># If current digit is less than 9, just increment and return</span></div>
+                    <div class="code-line">            <span class="keyword">if</span> <span class="variable">digits</span>[<span class="variable">i</span>] < <span class="number">9</span>:</div>
+                    <div class="code-line">                <span class="variable">digits</span>[<span class="variable">i</span>] += <span class="number">1</span></div>
+                    <div class="code-line">                <span class="keyword">return</span> <span class="variable">digits</span></div>
+                    <div class="code-line">            <span class="comment"># If current digit is 9, set it to 0</span></div>
+                    <div class="code-line">            <span class="variable">digits</span>[<span class="variable">i</span>] = <span class="number">0</span></div>
+                    <div class="code-line"></div>
+                    <div class="code-line">        <span class="comment"># If we reach here, all digits were 9</span></div>
+                    <div class="code-line">        <span class="keyword">return</span> [<span class="number">1</span>] + <span class="variable">digits</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample input array
+        const digits = [9, 9, 9];
+        let currentIndex = digits.length - 1;
+        let animationInterval;
+        let isPaused = false;
+        let animationSpeed = 1500;
+        let result = [...digits];
+
+        // Add speed control
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            speedValue.textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            if (animationInterval && !isPaused) {
+                clearInterval(animationInterval);
+                animationInterval = setInterval(animationStep, animationSpeed);
+            }
+        });
+
+        function updateButtonStates() {
+            startBtn.disabled = animationInterval && !isPaused;
+            pauseBtn.disabled = !animationInterval || isPaused;
+            resetBtn.disabled = !animationInterval && currentIndex === digits.length - 1;
+        }
+
+        function createArrayDisplay() {
+            const arrayDisplay = document.getElementById('arrayDisplay');
+            arrayDisplay.innerHTML = '';
+            
+            // Add current pointer arrow
+            const currentArrow = document.createElement('div');
+            currentArrow.className = 'pointer-arrow current';
+            currentArrow.setAttribute('data-label', 'current');
+            arrayDisplay.appendChild(currentArrow);
+            
+            // Use result array length instead of digits length
+            for (let i = 0; i < result.length; i++) {
+                const numBox = document.createElement('div');
+                numBox.className = 'num-box';
+                numBox.textContent = result[i];
+                numBox.dataset.index = i;
+                arrayDisplay.appendChild(numBox);
+            }
+        }
+
+        function updateArrayDisplay() {
+            const arrayDisplay = document.getElementById('arrayDisplay');
+            const numBoxes = arrayDisplay.querySelectorAll('.num-box');
+            
+            // Remove previous highlighting
+            numBoxes.forEach(box => {
+                box.classList.remove('current');
+                box.classList.remove('changed');
+                box.classList.remove('carry');
+            });
+
+            // Update highlighting
+            if (currentIndex >= 0) {
+                numBoxes[currentIndex].classList.add('current');
+            }
+            
+            // Highlight changed numbers and carry
+            for (let i = currentIndex + 1; i < result.length; i++) {
+                if (i < digits.length && result[i] !== digits[i]) {
+                    numBoxes[i].classList.add('changed');
+                    if (result[i] === 0) {
+                        numBoxes[i].classList.add('carry');
+                    }
+                }
+            }
+            
+            // Update arrow position
+            const currentArrow = arrayDisplay.querySelector('.pointer-arrow.current');
+            if (numBoxes[currentIndex]) {
+                const currentBox = numBoxes[currentIndex];
+                const currentRect = currentBox.getBoundingClientRect();
+                const containerRect = arrayDisplay.getBoundingClientRect();
+                currentArrow.style.left = (currentRect.left - containerRect.left + currentRect.width / 2) + 'px';
+            }
+
+            // Update numbers
+            for (let i = 0; i < result.length; i++) {
+                numBoxes[i].textContent = result[i];
+            }
+        }
+
+        function updateResultDisplay() {
+            const resultDisplay = document.getElementById('resultDisplay');
+            if (currentIndex < 0) {
+                resultDisplay.innerHTML = `<h4>Result: [${result.join(', ')}]</h4>`;
+            } else {
+                let status = `Processing digit at index ${currentIndex}`;
+                if (result[currentIndex] === 0) {
+                    status += ' (Carry 1 to next digit)';
+                }
+                resultDisplay.innerHTML = `<h4>${status}</h4>`;
+            }
+        }
+
+        function animationStep() {
+            if (currentIndex < 0) {
+                // If we've processed all digits and still have a carry
+                if (result.every(digit => digit === 0)) {
+                    // Create new array with leading 1
+                    result = [1, ...Array(digits.length).fill(0)];
+                    // Recreate the display with the new array
+                    createArrayDisplay();
+                }
+                clearInterval(animationInterval);
+                updateButtonStates();
+                return;
+            }
+
+            if (result[currentIndex] < 9) {
+                result[currentIndex]++;
+                currentIndex = -1;
+            } else {
+                result[currentIndex] = 0;
+                currentIndex--;
+            }
+
+            updateArrayDisplay();
+            updateResultDisplay();
+        }
+
+        function startAnimation() {
+            if (!animationInterval || isPaused) {
+                isPaused = false;
+                animationInterval = setInterval(animationStep, animationSpeed);
+                updateButtonStates();
+            }
+        }
+
+        function pauseAnimation() {
+            if (animationInterval && !isPaused) {
+                isPaused = true;
+                clearInterval(animationInterval);
+                updateButtonStates();
+            }
+        }
+
+        function resetAnimation() {
+            clearInterval(animationInterval);
+            currentIndex = digits.length - 1;
+            result = [...digits];
+            isPaused = false;
+            createArrayDisplay();
+            updateArrayDisplay();
+            updateResultDisplay();
+            updateButtonStates();
+        }
+
+        function toggleCodePanel() {
+            const codePanel = document.getElementById('codePanel');
+            const animationContainer = document.getElementById('animationContainer');
+            const toggleBtn = document.getElementById('toggleCodeBtn');
+
+            codePanel.classList.toggle('visible');
+            animationContainer.classList.toggle('code-hidden');
+
+            if (codePanel.classList.contains('visible')) {
+                toggleBtn.textContent = 'Hide Code';
+                animationContainer.style.marginRight = '800px';
+            } else {
+                toggleBtn.textContent = 'Show Code';
+                animationContainer.style.marginRight = '0';
+            }
+        }
+
+        function switchTab(language) {
+            const tabs = document.querySelectorAll('.code-tab');
+            const contents = document.querySelectorAll('.code-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`.code-tab[onclick="switchTab('${language}')"]`).classList.add('active');
+            document.getElementById(`${language}Code`).classList.add('active');
+        }
+
+        // Initialize the layout
+        document.addEventListener('DOMContentLoaded', function () {
+            const animationContainer = document.getElementById('animationContainer');
+            animationContainer.style.marginRight = '800px';
+            createArrayDisplay();
+            updateArrayDisplay();
+            updateResultDisplay();
+            updateButtonStates();
+        });
+    </script>
+</body>
+</html> 
